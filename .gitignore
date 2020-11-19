@@ -1,1 +1,2 @@
 # the file to write things ignored by pull requests
+*.log
