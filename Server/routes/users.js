@@ -1,6 +1,9 @@
-const express = require('express');
-const router = express.Router();
+const Express = require('express');
+require('dotenv/config');
+
 const UserModel = require('../models/User');
+
+const router = Express.Router();
 
 router.get('/', async (request, response) => {
     try {

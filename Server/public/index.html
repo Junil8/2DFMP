@@ -7,5 +7,13 @@
 </head>
 <body>
     <h1>TEST SIDE</h1>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io('localhost:8080', {
+            query: {
+                authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkRpc1QiLCJlbWFpbF9hZGRyZXNzIjoiZGVubmlzLnRoaWVzZW4uMTk5MEBnbWFpbC5jb20iLCJpYXQiOjE2MDg0NzAzMzl9.4WOy04cF8LtmC3FjrpCVghC4m7AiHZDDS2mdekWYGLc',
+            },
+        });
+    </script>
 </body>
 </html>

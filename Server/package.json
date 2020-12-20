@@ -8,14 +8,16 @@
     "cluster": "^0.7.7",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "ioredis": "^4.19.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.8",
     "os": "^0.1.1",
-    "socket.io": "^3.0.4"
+    "socket.io": "^3.0.4",
+    "socket.io-redis": "^6.0.1"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app"
   },
   "keywords": [],
   "author": "Team DJM - Dennis Thiesen",

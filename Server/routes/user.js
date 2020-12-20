@@ -1,14 +1,12 @@
-const express = require('express');
-const router = express.Router();
-const hash = require('../resources/hash');
-const validate = require('../resources/validate');
-const authenticate = require('../middlewares/authenticate');
-const UserModel = require('../models/User');
+const Express = require('express');
 require('dotenv/config');
 
-const validateEmail = validate.email;
-const salt = hash.salt;
-const sha256 = hash.sha256;
+const { Salt, SHA256 } = require('../resources/hash');
+const { IsEmail } = require('../resources/regex');
+const { Authentication } = require('../middlewares/authentication');
+const UserModel = require('../models/User');
+
+const router = Express.Router();
 
 router.get('/:username', async (request, response) => {
     try {
@@ -21,11 +19,10 @@ router.get('/:username', async (request, response) => {
 });
 
 router.post('/', async (request, response) => {
-    let hash = sha256(request.body.password, salt(process.env.SALT_LENGTH));
+    let hash = SHA256(request.body.password, Salt(process.env.SALT_LENGTH));
 
     let usernameExist = await UserModel.findOne({username: request.body.username});
     let emailExist = await UserModel.findOne({email_address: request.body.email_address});
-    let emailProber = validateEmail(request.body.email_address);
 
     if (usernameExist) {
         response.status(409).json({error: `The username ${request.body.username} is already taken.`});
@@ -37,7 +34,7 @@ router.post('/', async (request, response) => {
         return;
     }
 
-    if (!emailProber) {
+    if (!IsEmail(request.body.email_address)) {
         response.status(400).json({error: `The email is not valid.`});
         return;
     }
@@ -59,11 +56,11 @@ router.post('/', async (request, response) => {
     }
 });
 
-router.patch('/:username', authenticate, async (request, response) => {
+router.patch('/:username', Authentication, async (request, response) => {
     if (request.user.username === request.params.username) {
         try {
             if (request.body.password) {
-                let hash = sha256(request.body.password, salt(process.env.SALT_LENGTH));
+                let hash = SHA256(request.body.password, Salt(process.env.SALT_LENGTH));
                 request.body.password = hash.cypher;
                 request.body.password_salt = hash.salt;
             }
@@ -83,7 +80,7 @@ router.patch('/:username', authenticate, async (request, response) => {
     }
 });
 
-router.delete('/:username', authenticate, async (request, response) => {
+router.delete('/:username', Authentication, async (request, response) => {
     if (request.user.username === request.params.username) {
         try {
             let removed = await UserModel.remove({ username: request.user.username });
