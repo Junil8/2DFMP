@@ -8,18 +8,21 @@ const UserModel = require('../models/User');
 const router = Express.Router();
 
 router.post('/', async (request, response) => {
-    let user = await UserModel.findOne({ username: request.body.username });
-    let hash = SHA256(request.body.password, user.password_salt);
+    let user = await UserModel.findOne({ email_address: request.body.email_address });
 
-    if (hash.cypher === user.password) {
-        let token = SignToken(user.username, user.email_address);
-
-        await UserModel.updateOne({ username: user.username }, { $set: { last_sign_on: Date.now() } });
+    if (user) {
+        let hash = SHA256(request.body.password, user.password_salt);
     
-        response.status(200).json({token: token});
-    } else {
-        response.status(401).json(`Unauthorized.`);
+        if (hash.cypher === user.password) {
+            let token = SignToken(user.username, user.email_address);
+    
+            UserModel.updateOne({ email_address: user.email_address }, { $set: { last_sign_on: Date.now() } });
+        
+            return response.status(200).json({token: token});
+        }
     }
+    
+    return response.status(401).json({error: `Unauthorized.`});
 });
 
 module.exports = router;

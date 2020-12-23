@@ -1,0 +1,34 @@
+canvas {
+    background-color: var(--surface-color);
+    width: 100%;
+}
+
+button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    cursor: pointer;
+
+    background-color: var(--surface-color);
+    padding: 1rem;
+    border: none;
+
+    color: var(--surface-font-color);
+    line-height: 1rem;
+    font-size: 1rem;
+
+    transition: all 0.2s;
+}
+
+fa-icon {
+    padding-right: 1rem;
+
+    line-height: 1rem;
+    font-size: 1.5rem;
+}
+
+button:hover {
+    background-color: var(--primary-color);
+    color: var(--primary-font-color);
+}

@@ -1,0 +1,44 @@
+<app-dropmenu></app-dropmenu>
+<header>
+    <h1>2D Fighting Multiplayer Platformer</h1>
+</header>
+<section>
+    <h2>Account - {{username}}</h2>
+    <hr>
+    <form [formGroup]="formNewUsername" autocomplete="off">
+        <p class="error" *ngIf="errorNewUsername">Update failed.</p>
+        
+        <input type="text" id="newUsername" placeholder="New username..." formControlName="newUsername">
+        <p class="error" *ngIf="newUsername.invalid && newUsername?.dirty && newUsername.errors?.minlength">Username must contain at least 4 characters long.</p>
+        <p class="error" *ngIf="newUsername.invalid && newUsername?.dirty && newUsername.errors?.usernameAvailable">Username already taken.</p>
+
+        <input type="password" id="newUsernamePassword" placeholder="Password..." formControlName="password">
+        <p class="error" *ngIf="passwordForNewUsername.invalid && passwordForNewUsername?.dirty">Password must contain 1 lowercase, 1 uppercase, 1 number and be at least 8 characters long.</p>
+
+        <input type="button" value="Update Username" [disabled]="formNewUsername.invalid" (click)="onSubmitNewUsername()">
+    </form>
+    <hr>
+    <form [formGroup]="formNewPassword" autocomplete="off">
+        <p class="error" *ngIf="errorNewPassword">Update failed.</p>
+
+        <input type="password" id="newPassword" autocomplete="new-password" placeholder="New password..." formControlName="newPassword">
+        <p class="error" *ngIf="newPassword.invalid && newPassword?.dirty">Password must contain 1 lowercase, 1 uppercase, 1 number and be at least 8 characters long.</p>
+        
+        <input type="password" id="newPasswordRetype" placeholder="Retype new password..." formControlName="newPasswordRetype">
+        <p class="error" *ngIf="newPasswordRetype.invalid && newPasswordRetype?.dirty">Does not match.</p>
+
+        <input type="password" id="newPasswordPassword" placeholder="Password..." formControlName="password">
+        <p class="error" *ngIf="passwordForNewPassword.invalid && passwordForNewPassword?.dirty">Password must contain 1 lowercase, 1 uppercase, 1 number and be at least 8 characters long.</p>
+
+        <input type="button" value="Update Password" [disabled]="formNewPassword.invalid" (click)="onSubmitNewPassword()">
+    </form>
+    <hr>
+    <form [formGroup]="formDelete" autocomplete="off">
+        <p class="error" *ngIf="errorDelete">Delete failed.</p>
+
+        <input type="password" id="deletePassword" placeholder="Password..." formControlName="password">
+        <p class="error" *ngIf="passwordForDelete.invalid && passwordForDelete?.dirty">Password must contain 1 lowercase, 1 uppercase, 1 number and be at least 8 characters long.</p>
+
+        <input type="button" value="Delete Account" [disabled]="formDelete.invalid" (click)="onSubmitDelete()">
+    </form>
+</section>

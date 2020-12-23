@@ -8,6 +8,29 @@ const isEmail = (string) => {
 
     return regex.test(String(string).toLowerCase());
 };
+
+/**
+ * @summary                         Check if given string is a valid username
+ * @param   {String}    string      String to be validated
+ * @returns {Boolean}               Returns true if valid, else false
+ */
+const goodUsername = (string) => {
+    const regex = /^(?=.{4,})/;
+
+    return regex.test(String(string));
+}
+
+/**
+ * @summary                         Check if given string is a valid password
+ * @param   {String}    string      String to be validated
+ * @returns {Boolean}               Returns true if valid, else false
+ */
+const goodPassword = (string) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
+
+    return regex.test(String(string));
+}
+
 /**
  * @summary                         Check if given object is empty
  * @param   {Object}    object      Object to be validated
@@ -20,5 +43,7 @@ const isObjectEmpty = (object) => {
 
 module.exports = {
     IsEmail: isEmail,
-    IsObjectEmpty: isObjectEmpty
+    IsObjectEmpty: isObjectEmpty,
+    GoodPassword: goodPassword,
+    GoodUsername: goodUsername,
 };
