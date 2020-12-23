@@ -16,12 +16,15 @@ ERROR `{error: string}`
 POST `http://localhost:8080/api/encrypt/`
 JSON `{string: string, salt?: string}`
 RETURN `{cypher: string, salt: string}`
+ERROR `{error: string}`
 
 GET `http://localhost:8080/api/user/:username`
 Require Authentication.
+ERROR `{error: string}`
 
 POST `http://localhost:8080/api/user/available/`
 JSON `{username?: string, email_address?: string}`
+ERROR `{error: string}` | `{error: { username?: string, email_address?: string }}`
 
 POST `http://localhost:8080/api/user/`
 JSON `{username: string, email_address: string, password: string}`
