@@ -96,12 +96,18 @@ router.patch('/:username', Authentication, async (request, response) => {
         return response.status(403).json({error: `Forbidden.`});
     }
 
-    let userExist = await UserModel.findOne({username: request.params.username});
+    let error = {}, hasError = false;
 
-    if (!userExist) return response.status(200).json({ error: `User does not exist.` });
+    if (!GoodUsername(request.body.newUsername)) { error.newUsername = `The username must contain at least 4 characters long.`; hasError = true; }
+    if (!GoodPassword(request.body.newPassword)) { error.password = `The password must contain 1 lowercase, 1 uppercase, 1 number and be at least 8 characters long.`; hasError = true; }
+
+    if (hasError) return response.status(200).json({error: error});
 
     try {
+        let userExist = await UserModel.findOne({username: request.params.username});
         let values = {};
+    
+        if (!userExist) return response.status(200).json({ error: `User does not exist.` });
         
         if (request.body.newUsername) values.username = request.body.newUsername;
         if (request.body.newPassword) {
@@ -124,12 +130,12 @@ router.delete('/:username', Authentication, async (request, response) => {
     if (request.user.username !== request.params.username && request.user.role !== 'admin') {
         return response.status(403).json({error: `Forbidden.`});
     }
-
-    let userExist = await UserModel.findOne({username: request.params.username});
-
-    if (!userExist) return response.status(200).json({ error: `User does not exist.` });
     
     try {
+        let userExist = await UserModel.findOne({username: request.params.username});
+    
+        if (!userExist) return response.status(200).json({ error: `User does not exist.` });
+        
         await UserModel.deleteOne({ username: request.params.username });
 
         return response.status(200).json({ deleted: true });
