@@ -15,8 +15,8 @@ router.post('/', async (request, response) => {
     
         if (hash.cypher === user.password) {
             let token = SignToken(user.username, user.email_address);
-    
-            UserModel.updateOne({ email_address: user.email_address }, { $set: { last_sign_on: Date.now() } });
+
+            await UserModel.updateOne({ email_address: user.email_address }, { $set: { last_sign_on: new Date().toISOString() } });
         
             return response.status(200).json({token: token});
         }
