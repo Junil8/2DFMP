@@ -98,8 +98,8 @@ router.patch('/:username', Authentication, async (request, response) => {
 
     let error = {}, hasError = false;
 
-    if (!GoodUsername(request.body.newUsername)) { error.newUsername = `The username must contain at least 4 characters long.`; hasError = true; }
-    if (!GoodPassword(request.body.newPassword)) { error.password = `The password must contain 1 lowercase, 1 uppercase, 1 number and be at least 8 characters long.`; hasError = true; }
+    if (!GoodUsername(request.body.newUsername) && request.body.newUsername) { error.newUsername = `The username must contain at least 4 characters long.`; hasError = true; }
+    if (!GoodPassword(request.body.newPassword) && request.body.newPassword) { error.password = `The password must contain 1 lowercase, 1 uppercase, 1 number and be at least 8 characters long.`; hasError = true; }
 
     if (hasError) return response.status(200).json({error: error});
 
@@ -117,6 +117,9 @@ router.patch('/:username', Authentication, async (request, response) => {
         }
 
         await UserModel.updateOne({ username: request.params.username }, { $set: values });
+
+        if (request.body.newUsername) console.log(`Process ${process.pid} - Updated user with username of ${request.params.username} to ${request.body.newUsername}`);
+        if (request.body.newPassword) console.log(`Process ${process.pid} - Updated user with username of ${request.params.username}'s password`);
 
         return response.status(200).json({ updated: true });
     } catch(error) {
