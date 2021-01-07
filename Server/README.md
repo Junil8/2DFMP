@@ -77,6 +77,7 @@ WORKERS=<amount>
 
 ## Web Service
 
+The web service is build using [Express](https://www.npmjs.com/package/express) to serve a website build by [Angular](https://www.npmjs.com/package/@angular/cli).  
 The server will normaly use port `8080` to run on but it can be set to use an other port.
 
 ### Custom setup of web service
@@ -91,8 +92,8 @@ PORT=<port>
 
 ## API Service
 
+The API service is build using [Express](https://www.npmjs.com/package/express) and uses [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) to authenticate.  
 API service uses a JSON Web Token to be send as a bearer token.  
-This token is used to validate the user.  
 
 | Method | Type | Path | JSON | RETURN | ERROR | Authentication |
 |:------:|:----:| ---- | ---- | ------ | ----- |:--------------:|
@@ -108,8 +109,8 @@ This token is used to validate the user.
 
 ## Socket Service
 
-Socket connection require a JSON Web Token to be send via. a handshake.  
-This token is used to validate the user.  
+The socket service is build using [Socket.io](https://www.npmjs.com/package/socket.io) and uses [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) to validate the user.  
+Socket connection require a JSON Web Token to be send via. a handshake.   
 
 | Event | JSON | Description |
 |:-----:| ---- | ----------- |
