@@ -9,14 +9,10 @@ Run `npm install` to install dependencies.
 Make a copy of `.env.template` and rename to `.env`.  
 ```
 MONGO_DB_URI=mongodb+srv://<user>:<password>@cluster0.tbnrr.mongodb.net/<dbname>?retryWrites=true&w=majority
-WORKERS=2
-REDIS_HOST=localhost
-REDIS_PORT=6379
-SALT_LENGTH=6
+SALT_LENGTH=<length>
 ACCESS_TOKEN=<secret_key>
-PORT=8080
 ```  
-Change `<user>`, `<password>`, `<dbname>` and `<secret_key>`.
+Change `<user>`, `<password>`, `<dbname>`, `<length>` and `<secret_key>`.
 
 Run `npm start` for starting server.
 
@@ -24,6 +20,19 @@ Run `npm start` for starting server.
 
 To make [Socket.io](https://www.npmjs.com/package/socket.io) run with [Cluster](https://www.npmjs.com/package/cluster), will we be using [ioredis](https://www.npmjs.com/package/ioredis) and [socket.io-redis](https://www.npmjs.com/package/socket.io-redis) to handle the server cache.  
 This is needed becourse when we fork the service out in a cluster, then they will need a commen place to store there cache.
+
+In environment variables add lines  
+```
+REDIS_HOST=<ip>
+REDIS_PORT=<port>
+```  
+Change `<ip>` to the IP of the redis server. Default `localhost`.  
+Change `<port>` to the given port of the redis server. Default `6379`.
+
+## Cluster Service
+
+To control how many workers to fork to add line `WORKERS=<amount>`.  
+Change `<amount>` to the prefered amount of workers. Default to max possible workers.
 
 ## API Service
 
