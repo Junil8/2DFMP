@@ -105,7 +105,8 @@ PORT=<port>
 
 ## Socket Service
 
-Socket connection require a JSON Web Token to be send via. a handshake. This token is used to validate the user.  
+Socket connection require a JSON Web Token to be send via. a handshake.  
+This token is used to validate the user.  
 
 | Event | JSON | Description |
 |:-----:| ---- | ----------- |
