@@ -5,11 +5,11 @@ It uses [Express](https://www.npmjs.com/package/express) to manage an API and se
 It also uses [Socket.io](https://www.npmjs.com/package/socket.io) to manage the multiplayer server for the game.  
 For authentication it uses [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken).
 
-**Install Dependencies**
+### Install Dependencies
 
 Run `npm install` to install dependencies.
 
-**Setup Environment**
+### Setup Environment
 
 Make an environment file with name of `.env`.  
 In environment variables add lines.  
@@ -22,7 +22,7 @@ ACCESS_TOKEN=<secret_key>
 `<dbname>` the database name.  
 `<secret_key>` the given secret key to use in JSON Web Token.
 
-**Run Server**
+### Run Server
 
 Run `npm start` for starting server.
 
@@ -31,7 +31,7 @@ Run `npm start` for starting server.
 To make [Socket.io](https://www.npmjs.com/package/socket.io) run with [Cluster](https://www.npmjs.com/package/cluster), will we be using [ioredis](https://www.npmjs.com/package/ioredis) and [socket.io-redis](https://www.npmjs.com/package/socket.io-redis) to handle the server cache.  
 This is needed becourse when we fork the service out in a cluster, then they will need a commen place to store there cache.
 
-**Custom setup of redis server**
+### Custom setup of redis server
 
 In environment variables add lines.  
 ```
@@ -46,7 +46,7 @@ REDIS_PORT=<port>
 The passwords needs to be encrypted on the database for this we use [crypto-js](https://www.npmjs.com/package/crypto-js).  
 Normaly configure all there is needed to make a good encryption but it can be made to use a definded length for the salt.
 
-**Custom setup of encryption**
+### Custom setup of encryption
 
 In environment variables add lines.  
 ```
@@ -59,7 +59,7 @@ SALT_LENGTH=<length>
 The [Cluster](https://www.npmjs.com/package/cluster) package will fork the services of the server.  
 For this it needs to know how many threads are possible. Under normal configuration will it spawn as many workers as there are threads in the hardware but it kan be configured to only use a maximum amount.
 
-**Custom setup of cluster service**
+### Custom setup of cluster service
 
 In environment variables add lines.  
 ```
@@ -71,7 +71,7 @@ WORKERS=<amount>
 
 The server will normaly use port `8080` to run on but it can be set to use an other port.
 
-**Custom setup of web service**
+### Custom setup of web service
 
 In environment variables add lines.  
 ```
