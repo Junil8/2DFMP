@@ -24,7 +24,7 @@ ACCESS_TOKEN=<secret_key>
 
 ### Run Server
 
-Run `npm start` for starting server.  
+Run `npm start` for starting server.
 
 
 
@@ -41,7 +41,7 @@ REDIS_HOST=<ip>
 REDIS_PORT=<port>
 ```  
 `<ip>` the IP of the redis server. Default `localhost`.  
-`<port>` the given port of the redis server. Default `6379`.  
+`<port>` the given port of the redis server. Default `6379`.
 
 
 
@@ -56,7 +56,7 @@ In environment variables add lines.
 ```
 SALT_LENGTH=<length>
 ```  
-`<length>` the length of a random salt. Default `6`.  
+`<length>` the length of a random salt. Default `6`.
 
 
 
@@ -71,7 +71,7 @@ In environment variables add lines.
 ```
 WORKERS=<amount>
 ```  
-`<amount>` the prefered amount of workers. Default to max possible workers.  
+`<amount>` the prefered amount of workers. Default to max possible workers.
 
 
 
@@ -85,7 +85,7 @@ In environment variables add lines.
 ```
 PORT=<port>
 ```  
-`<port>` the port which the server should use. Default `8080`.  
+`<port>` the port which the server should use. Default `8080`.
 
 
 
