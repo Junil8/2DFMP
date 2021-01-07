@@ -9,7 +9,7 @@ const salt_length = process.env.SALT_LENGTH || 6;
  * @returns {String}                Returns the salt as a string
  */
 const salt = function(){
-    return Crypto.lib.WordArray.random(salt_length).toString(Crypto.enc.Base64);
+    return Crypto.lib.WordArray.random(salt_length / 2).toString(Crypto.enc.Hex);
 };
 
 /**
@@ -19,7 +19,9 @@ const salt = function(){
  * @returns {Object}                Returns the hash { salt, cypher }
  */
 const encrypt = function(string, salt) {
-    let cypher = Crypto.HmacSHA256(string, salt).toString(Crypto.enc.Base64);
+    let cypher = Crypto.HmacSHA256(string, salt).toString(Crypto.enc.Hex);
+
+    console.log(cypher);
 
     return {
         salt: salt,
