@@ -1,0 +1,8 @@
+<aside [ngClass]="setActive()">
+    <nav>
+        <button routerLink="/game"><fa-icon [icon]="faPlay"></fa-icon>Play Game</button>
+        <button routerLink="/account"><fa-icon [icon]="faUser"></fa-icon>My Account</button>
+        <button (click)="onClickLogout()"><fa-icon [icon]="faSignOutAlt"></fa-icon>Logout</button>
+    </nav>
+    <button (click)="onToggle()"><fa-icon [icon]="faBars"></fa-icon></button>
+</aside>
