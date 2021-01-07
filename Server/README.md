@@ -5,9 +5,14 @@ It uses [Express](https://www.npmjs.com/package/express) to manage an API and se
 It also uses [Socket.io](https://www.npmjs.com/package/socket.io) to manage the multiplayer server for the game.  
 For authentication it uses [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken).
 
+**Install**
+
 Run `npm install` to install dependencies.
 
+**Setup**
+
 Make an environment file with name of `.env`.  
+In environment variables add lines.  
 ```
 MONGO_DB_URI=mongodb+srv://<user>:<password>@cluster0.tbnrr.mongodb.net/<dbname>?retryWrites=true&w=majority
 ACCESS_TOKEN=<secret_key>
@@ -15,6 +20,8 @@ ACCESS_TOKEN=<secret_key>
 `<user>` the database user.  
 `<password>` the database user password.  
 `<dbname>` the database name.
+
+**Run**
 
 Run `npm start` for starting server.
 
