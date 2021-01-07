@@ -91,7 +91,7 @@ PORT=<port>
 
 ## API Service
 
-API service uses a JSON Web Token to be send as a bearer token.
+API service uses a JSON Web Token to be send as a bearer token.  
 This token is used to validate the user.  
 
 | Method | Type | Path | JSON | RETURN | ERROR | Authentication |
