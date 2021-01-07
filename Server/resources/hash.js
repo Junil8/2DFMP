@@ -1,11 +1,14 @@
 const Crypto = require('crypto');
+require('dotenv/config');
 
 /**
  * @summary                         Create a random salt of given length
  * @param   {Number}    length      Length of the slat
  * @returns {String}                Returns the salt as a string
  */
-const salt = function(length){
+const salt = function(){
+    let length = process.env.SALT_LENGTH || 6;
+    
     return Crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length);
 };
 

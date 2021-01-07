@@ -1,7 +1,7 @@
 const Express = require('express');
 require('dotenv/config');
 
-const { SHA256 } = require('../resources/hash');
+const { SHA256, Salt } = require('../resources/hash');
 
 const router = Express.Router();
 
@@ -12,7 +12,7 @@ router.post('/SHA256', async (request, response) => {
     if (salt)
         hash = SHA256(request.body.string, salt);
     else
-        hash = SHA256(request.body.string, Salt(process.env.SALT_LENGTH));
+        hash = SHA256(request.body.string, Salt());
 
     return response.status(201).json(hash);
 });
