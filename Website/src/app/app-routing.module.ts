@@ -10,8 +10,8 @@ import { AccountComponent } from './components/account/account.component';
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'game', component: GameComponent, canActivate: [GuardService] },
-  { path: 'account', component: AccountComponent, canActivate: [GuardService] },
+  { path: 'game', component: GameComponent, canActivate: [GuardService], runGuardsAndResolvers: 'always' },
+  { path: 'account', component: AccountComponent, canActivate: [GuardService], runGuardsAndResolvers: 'always' },
 
   { path: '**', redirectTo: '' }
 ];

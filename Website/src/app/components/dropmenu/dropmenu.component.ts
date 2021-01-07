@@ -34,6 +34,14 @@ export class DropmenuComponent implements OnInit {
     this.isActive = !this.isActive;
   }
 
+  onClickGame() {
+    this.router.navigate(['/game']);
+  }
+
+  onClickAccount() {
+    this.router.navigate(['/account']);
+  }
+
   onClickLogout() {
     this.auth.clearAuthentication();
     this.router.navigate(['/']);

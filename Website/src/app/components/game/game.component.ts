@@ -13,18 +13,20 @@ export class GameComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.loadScript('/socket.io/socket.io.js');
-    this.loadScript('../assets/game.js');
+    this.loadScript('//cdn.jsdelivr.net/npm/phaser@3.51.0/dist/phaser.min.js', false);
+    this.loadScript('/socket.io/socket.io.js', false);
+    this.loadScript('/assets/configure.js', true, 'module');
   }
 
-  private loadScript(url: string) {
+  private loadScript(url: string, defer: boolean = true, type: string = 'application/javascript') {
     const body = <HTMLDivElement> document.body;
     const script = document.createElement('script');
 
     script.innerHTML = '';
     script.src = url;
     script.async = false;
-    script.defer = true;
+    script.defer = defer;
+    script.type = type;
 
     body.appendChild(script);
   }
