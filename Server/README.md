@@ -43,7 +43,10 @@ REDIS_PORT=<port>
 
 ## Encryption Settings
 
-The passwords needs to be encrypted on the database for this we use [crypto-js](https://www.npmjs.com/package/crypto-js).
+The passwords needs to be encrypted on the database for this we use [crypto-js](https://www.npmjs.com/package/crypto-js).  
+Normaly configure all there is needed to make a good encryption but it can be made to use a definded length for the salt.
+
+**Custom setup of encryption**
 
 In environment variables add lines.  
 ```
@@ -53,6 +56,11 @@ SALT_LENGTH=<length>
 
 ## Cluster Service
 
+The [Cluster](https://www.npmjs.com/package/cluster) package will fork the services of the server.  
+For this it needs to know how many threads are possible. Under normal configuration will it spawn as many workers as there are threads in the hardware but it kan be configured to only use a maximum amount.
+
+**Custom setup of cluster service**
+
 In environment variables add lines.  
 ```
 WORKERS=<amount>
@@ -60,6 +68,10 @@ WORKERS=<amount>
 `<amount>` the prefered amount of workers. Default to max possible workers.
 
 ## Web Service
+
+The server will normaly use port `8080` to run on but it can be set to use an other port.
+
+**Custom setup of web service**
 
 In environment variables add lines.  
 ```
