@@ -2,7 +2,7 @@ const Express = require('express');
 require('dotenv/config');
 
 const { SignToken } = require('../resources/auth');
-const { SHA256 } = require('../resources/hash');
+const { Encrypt } = require('../resources/hash');
 const UserModel = require('../models/User');
 
 const router = Express.Router();
@@ -11,7 +11,7 @@ router.post('/', async (request, response) => {
     let user = await UserModel.findOne({ email_address: request.body.email_address });
 
     if (user) {
-        let hash = SHA256(request.body.password, user.password_salt);
+        let hash = Encrypt(request.body.password, user.password_salt);
     
         if (hash.cypher === user.password) {
             let token = SignToken(user.username, user.email_address);
