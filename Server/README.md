@@ -3,6 +3,7 @@
 This server is running as a cluster managed by package [Cluster](https://www.npmjs.com/package/cluster).  
 It uses [Express](https://www.npmjs.com/package/express) to manage an API and serve a website build by [Angular](https://www.npmjs.com/package/@angular/cli).  
 It also uses [Socket.io](https://www.npmjs.com/package/socket.io) to manage the multiplayer server for the game.
+For authentication it uses [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken).
 
 Run `npm install` to install dependencies.
 
@@ -12,7 +13,11 @@ MONGO_DB_URI=mongodb+srv://<user>:<password>@cluster0.tbnrr.mongodb.net/<dbname>
 SALT_LENGTH=<length>
 ACCESS_TOKEN=<secret_key>
 ```  
-Change `<user>`, `<password>`, `<dbname>`, `<length>` and `<secret_key>`.
+`<user>` the database user.  
+`<password>` the database user password.  
+`<dbname>` the database name.  
+`<length>` the length of a random salt.  
+`<secret_key>` the secret key to use in JSON Web Token.
 
 Run `npm start` for starting server.
 
@@ -26,13 +31,24 @@ In environment variables add lines
 REDIS_HOST=<ip>
 REDIS_PORT=<port>
 ```  
-Change `<ip>` to the IP of the redis server. Default `localhost`.  
-Change `<port>` to the given port of the redis server. Default `6379`.
+`<ip>` the IP of the redis server. Default `localhost`.  
+`<port>` the given port of the redis server. Default `6379`.
 
 ## Cluster Service
 
-To control how many workers to spawn add line `WORKERS=<amount>`.  
-Change `<amount>` to the prefered amount of workers. Default to max possible workers.
+In environment variables add lines  
+```
+WORKERS=<amount>
+```   
+`<amount>` the prefered amount of workers. Default to max possible workers.
+
+## Web Service
+
+In environment variables add lines  
+```
+PORT=<port>
+```   
+`<port>` the port which the server should use. Default `8080`.
 
 ## API Service
 
