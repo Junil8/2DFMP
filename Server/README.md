@@ -6,7 +6,6 @@ It also uses [Socket.io](https://www.npmjs.com/package/socket.io) to manage the 
 
 Run `npm start` for starting server.
 
-
 ## Redis server
 
 To make [Socket.io](https://www.npmjs.com/package/socket.io) run with [Cluster](https://www.npmjs.com/package/cluster), will we be using [ioredis](https://www.npmjs.com/package/ioredis) and [socket.io-redis](https://www.npmjs.com/package/socket.io-redis) to handle the server cache.  
