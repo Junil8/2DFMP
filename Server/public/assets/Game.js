@@ -1,4 +1,4 @@
-export class Example extends Phaser.Scene {
+class Game extends Phaser.Scene {
 
     player;
     stars;
@@ -8,7 +8,7 @@ export class Example extends Phaser.Scene {
 
     constructor()
     {
-        super({ key: 'Example', active: true });
+        super({ key: 'Game', active: true });
     }
 
     preload()
