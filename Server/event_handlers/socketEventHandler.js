@@ -35,9 +35,9 @@ class SocketEventHandler {
                 ready: false
             };
 
-            console.log(`${player.username} - Joined with client: ${player.client}`);
-
             this.gameCache.registerPlayer(socket.client.id, player);
+
+            console.log(`${player.username} - Joined with client: ${player.client}`);
 
             this.handleDisconnect(socket);
         }
@@ -55,7 +55,7 @@ class SocketEventHandler {
             
             await context.gameCache.deletePlayer(socket.client.id);
 
-            console.log(`${player.username} - Left`);
+            console.log(`${player.username} - Left from client: ${player.client}`);
         });
     }
 }
