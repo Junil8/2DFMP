@@ -97,13 +97,13 @@ API service uses a JSON Web Token to be send as a bearer token.
 
 | Method | Type | Path | JSON | RETURN | ERROR | Authentication |
 |:------:|:----:| ---- | ---- | ------ | ----- |:--------------:|
-|Authenticate|POST|`/api/token/`|username<br>password|token||False|
-|Encrypt|POST|`/api/encrypt/`|string<br>salt?|cypher<br>salt||False|
-|User Available|POST|`/api/user/available/`|email_address?<br>username?|available: {<br>&nbsp;&nbsp;&nbsp;&nbsp;email_address?<br>&nbsp;&nbsp;&nbsp;&nbsp;username?<br>}|error: {<br>&nbsp;&nbsp;&nbsp;&nbsp;email_address?<br>&nbsp;&nbsp;&nbsp;&nbsp;username?<br>}|False|
-|Get User|GET|`/api/user/:username`||_id<br>email_address<br>username<br>password<br>password_salt<br>created_on<br>last_sign_on||True|
-|Create User|POST|`/api/user/`|email_address<br>username<br>password|_id<br>email_address<br>username<br>password<br>password_salt<br>created_on<br>last_sign_on|error: {<br>&nbsp;&nbsp;&nbsp;&nbsp;email_address?<br>&nbsp;&nbsp;&nbsp;&nbsp;username?<br>&nbsp;&nbsp;&nbsp;&nbsp;password?<br>}|False|
-|Update User|PATCH|`/api/user/:username`|new_username?<br>new_password?<br>password|updated|error: {<br>&nbsp;&nbsp;&nbsp;&nbsp;new_username?<br>&nbsp;&nbsp;&nbsp;&nbsp;new_password?<br>&nbsp;&nbsp;&nbsp;&nbsp;password?<br>}|True|
-|Delete User|POST|`/api/user/delete/:username`|password|deleted|error: {<br>&nbsp;&nbsp;&nbsp;&nbsp;password?<br>}|True|
+|Authenticate|POST|`/api/token/`|username<br>password|token|error: {<br>&nbsp;&nbsp;&nbsp;&nbsp;authentication?<br>}|False|
+|Encrypt|POST|`/api/encrypt/`|string<br>salt?|cypher<br>salt|error: {<br>&nbsp;&nbsp;&nbsp;&nbsp;authentication?<br>}|False|
+|User Available|POST|`/api/user/available/`|email_address?<br>username?|available: {<br>&nbsp;&nbsp;&nbsp;&nbsp;email_address?<br>&nbsp;&nbsp;&nbsp;&nbsp;username?<br>}|error: {<br>&nbsp;&nbsp;&nbsp;&nbsp;email_address?<br>&nbsp;&nbsp;&nbsp;&nbsp;username?<br>&nbsp;&nbsp;&nbsp;&nbsp;authentication?<br>}|False|
+|Get User|GET|`/api/user/:username`||_id<br>email_address<br>username<br>password<br>password_salt<br>created_on<br>last_sign_on|error: {<br>&nbsp;&nbsp;&nbsp;&nbsp;authentication?<br>}|True|
+|Create User|POST|`/api/user/`|email_address<br>username<br>password|_id<br>email_address<br>username<br>password<br>password_salt<br>created_on<br>last_sign_on|error: {<br>&nbsp;&nbsp;&nbsp;&nbsp;email_address?<br>&nbsp;&nbsp;&nbsp;&nbsp;username?<br>&nbsp;&nbsp;&nbsp;&nbsp;password?<br>&nbsp;&nbsp;&nbsp;&nbsp;authentication?<br>}|False|
+|Update User|PATCH|`/api/user/:username`|new_username?<br>new_password?<br>password|updated|error: {<br>&nbsp;&nbsp;&nbsp;&nbsp;new_username?<br>&nbsp;&nbsp;&nbsp;&nbsp;new_password?<br>&nbsp;&nbsp;&nbsp;&nbsp;password?<br>&nbsp;&nbsp;&nbsp;&nbsp;authentication?<br>}|True|
+|Delete User|POST|`/api/user/delete/:username`|password|deleted|error: {<br>&nbsp;&nbsp;&nbsp;&nbsp;password?<br>&nbsp;&nbsp;&nbsp;&nbsp;authentication?<br>}|True|
 
 
 

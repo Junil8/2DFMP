@@ -18,7 +18,7 @@ router.get('/:username', Authentication, async (request, response) => {
 			response.status(500).json({error: `Internal Server Error.`});
 		}
 	} else {
-        response.status(403).json({error: `Forbidden.`});
+        response.status(403).json({error: { authentication: `Forbidden.`}});
     }
 });
 
@@ -93,7 +93,7 @@ router.post('/', async (request, response) => {
 
 router.patch('/:username', Authentication, async (request, response) => {
     if (request.user.username !== request.params.username && request.user.role !== 'admin') {
-        return response.status(403).json({error: `Forbidden.`});
+        return response.status(403).json({error: { authentication: `Forbidden.`}});
     }
 
     let error = {}, hasError = false;
@@ -112,7 +112,7 @@ router.patch('/:username', Authentication, async (request, response) => {
 
         let user_hash = Encrypt(request.body.password, request.user.password_salt);
 
-        if (request.user.password !== user_hash.cypher) return response.status(403).json({ error: `Forbidden.` });
+        if (request.user.password !== user_hash.cypher) return response.status(403).json({ error: { authentication: `Forbidden.`}});
         
         if (request.body.new_username) values.username = request.body.new_username;
         if (request.body.new_password) {
@@ -136,7 +136,7 @@ router.patch('/:username', Authentication, async (request, response) => {
 
 router.post('/delete/:username', Authentication, async (request, response) => {
     if (request.user.username !== request.params.username && request.user.role !== 'admin') {
-        return response.status(403).json({error: `Forbidden.`});
+        return response.status(403).json({error: { authentication: `Forbidden.`}});
     }
 
     if (!GoodPassword(request.body.password)) response.status(200).json({error: { password: 'The password must contain 1 lowercase, 1 uppercase, 1 number and be at least 8 characters long.' }});
@@ -148,7 +148,7 @@ router.post('/delete/:username', Authentication, async (request, response) => {
 
         let user_hash = Encrypt(request.body.password, request.user.password_salt);
 
-        if (request.user.password !== user_hash.cypher) return response.status(403).json({ error: `Forbidden.` });
+        if (request.user.password !== user_hash.cypher) return response.status(403).json({ error: { authentication: `Forbidden.`}});
         
         await UserModel.deleteOne({ username: request.params.username });
 

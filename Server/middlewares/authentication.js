@@ -13,10 +13,10 @@ const authentication = async (request, response, next) => {
             request.user = user;
             next();
         } else {
-            return response.status(403).json({error: `Forbidden.`});
+            return response.status(403).json({error: { authentication: `Forbidden.`}});
         }
     } else {
-        response.status(401).json({error: `Unauthorized.`});
+        response.status(401).json({error: { authentication: `Unauthorized.`}});
     }
 };
 
