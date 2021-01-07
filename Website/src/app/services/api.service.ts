@@ -22,7 +22,7 @@ export class ApiService {
   tokenRoute:string = '/api/token';
   userRoute:string = '/api/user';
   availableRoute:string = '/api/user/available';
-  encryptRoute:string = '/api/encrypt/SHA256';
+  encryptRoute:string = '/api/encrypt/';
 
   constructor(
     private http: HttpClient, 
