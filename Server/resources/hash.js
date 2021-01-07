@@ -21,8 +21,6 @@ const salt = function(){
 const encrypt = function(string, salt) {
     let cypher = Crypto.HmacSHA256(string, salt).toString(Crypto.enc.Hex);
 
-    console.log(cypher);
-
     return {
         salt: salt,
         cypher: cypher
