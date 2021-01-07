@@ -100,3 +100,12 @@ PORT=<port>
 |Create User|POST|`/api/user/`|email_address<br>username<br>password|_id<br>email_address<br>username<br>password<br>password_salt<br>created_on<br>last_sign_on|error: {<br>&nbsp;&nbsp;&nbsp;&nbsp;email_address?<br>&nbsp;&nbsp;&nbsp;&nbsp;username?<br>&nbsp;&nbsp;&nbsp;&nbsp;password?<br>}|False|
 |Update User|PATCH|`/api/user/:username`|newUsername?<br>newPassword?|updated|error: {<br>&nbsp;&nbsp;&nbsp;&nbsp;username?<br>&nbsp;&nbsp;&nbsp;&nbsp;password?<br>}|True|
 |Delete User|DELETE|`/api/user/:username`||deleted||True|
+
+
+
+## Socket Service
+
+| Event | JSON | Description |
+|:-----:| ---- | ----------- |
+|connect|||
+|disconnect|||
