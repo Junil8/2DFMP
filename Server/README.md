@@ -31,7 +31,7 @@ Change `<port>` to the given port of the redis server. Default `6379`.
 
 ## Cluster Service
 
-To control how many workers to fork to add line `WORKERS=<amount>`.  
+To control how many workers to spawn add line `WORKERS=<amount>`.  
 Change `<amount>` to the prefered amount of workers. Default to max possible workers.
 
 ## API Service
