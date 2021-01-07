@@ -7,26 +7,23 @@ For authentication it uses [jsonwebtoken](https://www.npmjs.com/package/jsonwebt
 
 Run `npm install` to install dependencies.
 
-Make a copy of `.env.template` and rename to `.env`.  
+Make an environment file with name of `.env`.  
 ```
 MONGO_DB_URI=mongodb+srv://<user>:<password>@cluster0.tbnrr.mongodb.net/<dbname>?retryWrites=true&w=majority
-SALT_LENGTH=<length>
 ACCESS_TOKEN=<secret_key>
 ```  
 `<user>` the database user.  
 `<password>` the database user password.  
-`<dbname>` the database name.  
-`<length>` the length of a random salt. Default `6`.  
-`<secret_key>` the secret key to use in JSON Web Token.
+`<dbname>` the database name.
 
 Run `npm start` for starting server.
 
-## Redis server
+## Redis Server
 
 To make [Socket.io](https://www.npmjs.com/package/socket.io) run with [Cluster](https://www.npmjs.com/package/cluster), will we be using [ioredis](https://www.npmjs.com/package/ioredis) and [socket.io-redis](https://www.npmjs.com/package/socket.io-redis) to handle the server cache.  
 This is needed becourse when we fork the service out in a cluster, then they will need a commen place to store there cache.
 
-In environment variables add lines  
+In environment variables add lines.  
 ```
 REDIS_HOST=<ip>
 REDIS_PORT=<port>
@@ -34,20 +31,30 @@ REDIS_PORT=<port>
 `<ip>` the IP of the redis server. Default `localhost`.  
 `<port>` the given port of the redis server. Default `6379`.
 
+## Encryption Settings
+
+In environment variables add lines.  
+```
+SALT_LENGTH=<length>
+ENCRYPT_ALGORITHM=<algorithm>
+```  
+`<length>` the length of a random salt. Default `6`.  
+`<algorithm>` the given type of algorithm to use. Default `sha256`.
+
 ## Cluster Service
 
-In environment variables add lines  
+In environment variables add lines.  
 ```
 WORKERS=<amount>
-```   
+```  
 `<amount>` the prefered amount of workers. Default to max possible workers.
 
 ## Web Service
 
-In environment variables add lines  
+In environment variables add lines.  
 ```
 PORT=<port>
-```   
+```  
 `<port>` the port which the server should use. Default `8080`.
 
 ## API Service
