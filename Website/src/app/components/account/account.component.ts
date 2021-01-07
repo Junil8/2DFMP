@@ -70,6 +70,15 @@ export class AccountComponent implements OnInit {
     this.setUsername();
   }
 
+  private async relogin(email: string, password: string) {
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(async () => {
+      let auth = await this.api.login(email, password);
+      this.auth.setAuthentication(auth);
+
+      this.router.navigate(['/account']);
+    });
+  }
+
   async setUsername() {
     let user = await this.api.getUser();
     this.username = user.username;
@@ -83,42 +92,13 @@ export class AccountComponent implements OnInit {
   get passwordForNewPassword() { return this.formNewPassword.get('password') as AbstractControl; }
   get passwordForDelete() { return this.formDelete.get('password') as AbstractControl; }
 
-  private async validPassword(password: string): Promise<boolean> {
-    try {
-      let user = await this.api.getUser();
-      let hash = await this.api.encrypt({string: password, salt: user.password_salt});
-
-      return hash.cypher === user.password;
-    } catch(e) {
-      return false;
-    }
-  }
-
-  private async relogin(email: string, password: string) {
-    let auth = await this.api.login(email, password);
-    this.auth.setAuthentication(auth);
-  }
-
-  private refresh() {
-    this.router.navigateByUrl('/refresh', { skipLocationChange: true }).then(() => {
-      this.router.navigate([decodeURI(this.location.path())]);
-    });
-  }
-
   async onSubmitNewUsername() {
-    let validPassword = await this.validPassword(this.passwordForNewUsername.value);
-    if (!validPassword) {
-      this.errorNewUsername = true;
-      return;
-    }
-
     try {
       let user = await this.api.getUser();
-      let updated = await this.api.updateUser({newUsername: this.newUsername.value});
+      let updated = await this.api.updateUser({new_username: this.newUsername.value, password: this.passwordForNewUsername.value});
 
       if (!updated.error) {
         this.relogin(user.email_address, this.passwordForNewUsername.value);
-        this.refresh();
       } else {
         this.errorNewUsername = true;
       }
@@ -128,19 +108,12 @@ export class AccountComponent implements OnInit {
   }
 
   async onSubmitNewPassword() {
-    let validPassword = await this.validPassword(this.passwordForNewPassword.value);
-    if (!validPassword) {
-      this.errorNewPassword = true;
-      return;
-    }
-
     try {
       let user = await this.api.getUser();
-      let updated = await this.api.updateUser({newPassword: this.newPassword.value});
+      let updated = await this.api.updateUser({new_password: this.newPassword.value, password: this.passwordForNewPassword.value});
       
       if (!updated.error) {
         this.relogin(user.email_address, this.newPassword.value);
-        this.refresh();
       } else {
         this.errorNewPassword = true;
       }
@@ -150,14 +123,8 @@ export class AccountComponent implements OnInit {
   }
 
   async onSubmitDelete() {
-    let validPassword = await this.validPassword(this.passwordForDelete.value);
-    if (!validPassword) {
-      this.errorDelete = true;
-      return;
-    }
-
     try {
-      let deleted = await this.api.deleteUser();
+      let deleted = await this.api.deleteUser({password: this.passwordForDelete.value});
       
       if (!deleted.error) {
         this.auth.clearAuthentication();

@@ -98,8 +98,9 @@ router.patch('/:username', Authentication, async (request, response) => {
 
     let error = {}, hasError = false;
 
-    if (!GoodUsername(request.body.newUsername) && request.body.newUsername) { error.newUsername = `The username must contain at least 4 characters long.`; hasError = true; }
-    if (!GoodPassword(request.body.newPassword) && request.body.newPassword) { error.password = `The password must contain 1 lowercase, 1 uppercase, 1 number and be at least 8 characters long.`; hasError = true; }
+    if (!GoodUsername(request.body.new_username) && request.body.new_username) { error.new_username = `The username must contain at least 4 characters long.`; hasError = true; }
+    if (!GoodPassword(request.body.new_password) && request.body.new_password) { error.new_password = `The password must contain 1 lowercase, 1 uppercase, 1 number and be at least 8 characters long.`; hasError = true; }
+    if (!GoodPassword(request.body.password)) { error.password = `The password must contain 1 lowercase, 1 uppercase, 1 number and be at least 8 characters long.`; hasError = true; }
 
     if (hasError) return response.status(200).json({error: error});
 
@@ -108,18 +109,22 @@ router.patch('/:username', Authentication, async (request, response) => {
         let values = {};
     
         if (!userExist) return response.status(200).json({ error: `User does not exist.` });
+
+        let user_hash = Encrypt(request.body.password, request.user.password_salt);
+
+        if (request.user.password !== user_hash.cypher) return response.status(403).json({ error: `Forbidden.` });
         
-        if (request.body.newUsername) values.username = request.body.newUsername;
-        if (request.body.newPassword) {
-            let hash = Encrypt(request.body.newPassword, Salt());
+        if (request.body.new_username) values.username = request.body.new_username;
+        if (request.body.new_password) {
+            let hash = Encrypt(request.body.new_password, Salt());
             values.password = hash.cypher;
             values.password_salt = hash.salt;
         }
 
         await UserModel.updateOne({ username: request.params.username }, { $set: values });
 
-        if (request.body.newUsername) console.log(`Process ${process.pid} - Updated user with username of ${request.params.username} to ${request.body.newUsername}`);
-        if (request.body.newPassword) console.log(`Process ${process.pid} - Updated user with username of ${request.params.username}'s password`);
+        if (request.body.new_username) console.log(`Process ${process.pid} - Updated user with username of ${request.params.username} to ${request.body.new_username}`);
+        if (request.body.new_password) console.log(`Process ${process.pid} - Updated user with username of ${request.params.username}'s password`);
 
         return response.status(200).json({ updated: true });
     } catch(error) {
@@ -129,15 +134,21 @@ router.patch('/:username', Authentication, async (request, response) => {
     }
 });
 
-router.delete('/:username', Authentication, async (request, response) => {
+router.post('/delete/:username', Authentication, async (request, response) => {
     if (request.user.username !== request.params.username && request.user.role !== 'admin') {
         return response.status(403).json({error: `Forbidden.`});
     }
+
+    if (!GoodPassword(request.body.password)) response.status(200).json({error: { password: 'The password must contain 1 lowercase, 1 uppercase, 1 number and be at least 8 characters long.' }});
     
     try {
         let userExist = await UserModel.findOne({username: request.params.username});
     
         if (!userExist) return response.status(200).json({ error: `User does not exist.` });
+
+        let user_hash = Encrypt(request.body.password, request.user.password_salt);
+
+        if (request.user.password !== user_hash.cypher) return response.status(403).json({ error: `Forbidden.` });
         
         await UserModel.deleteOne({ username: request.params.username });
 

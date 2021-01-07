@@ -103,7 +103,7 @@ API service uses a JSON Web Token to be send as a bearer token.
 |Get User|GET|`/api/user/:username`||_id<br>email_address<br>username<br>password<br>password_salt<br>created_on<br>last_sign_on||True|
 |Create User|POST|`/api/user/`|email_address<br>username<br>password|_id<br>email_address<br>username<br>password<br>password_salt<br>created_on<br>last_sign_on|error: {<br>&nbsp;&nbsp;&nbsp;&nbsp;email_address?<br>&nbsp;&nbsp;&nbsp;&nbsp;username?<br>&nbsp;&nbsp;&nbsp;&nbsp;password?<br>}|False|
 |Update User|PATCH|`/api/user/:username`|newUsername?<br>newPassword?|updated|error: {<br>&nbsp;&nbsp;&nbsp;&nbsp;username?<br>&nbsp;&nbsp;&nbsp;&nbsp;password?<br>}|True|
-|Delete User|DELETE|`/api/user/:username`||deleted||True|
+|Delete User|POST|`/api/user/delete/:username`||deleted||True|
 
 
 

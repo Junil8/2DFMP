@@ -1,11 +1,13 @@
 const { VerifyToken } = require('../resources/auth');
+const UserModel = require('../models/User');
 
-const authentication = (request, response, next) => {
+const authentication = async (request, response, next) => {
     let authorization = request.headers.authorization;
 
     if (authorization) {
-        let token = authorization.split(' ')[1];
-        let user = VerifyToken(token);
+        let token = VerifyToken(authorization.split(' ')[1]);
+
+        let user = await UserModel.findOne({ username: token.username });
 
         if (user) {
             request.user = user;

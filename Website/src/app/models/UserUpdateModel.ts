@@ -1,4 +1,5 @@
 export class UserUpdateModel {
-    newUsername?: string;
-    newPassword?: string;
+    new_username?: string;
+    new_password?: string;
+    password: string;
 }

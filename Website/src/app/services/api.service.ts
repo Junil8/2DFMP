@@ -10,9 +10,8 @@ import { UserUpdatedModel } from '../models/UserUpdatedModel';
 import { UserDeletedModel } from '../models/UserDeletedModel';
 import { UserUpdateModel } from '../models/UserUpdateModel';
 import { AuthorizationModel } from '../models/AuthorizationModel';
-import { HashModel } from '../models/HashModel';
-import { HashCreateModel } from '../models/HashCreateModel';
 import { AvailableModel } from '../models/AvailableModel';
+import { UserDeleteModel } from '../models/UserDeleteModel';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +21,6 @@ export class ApiService {
   tokenRoute:string = '/api/token';
   userRoute:string = '/api/user';
   availableRoute:string = '/api/user/available';
-  encryptRoute:string = '/api/encrypt/';
 
   constructor(
     private http: HttpClient, 
@@ -70,7 +68,7 @@ export class ApiService {
     return this.http.patch<UserUpdatedModel>(`${this.host}${this.userRoute}/${username}`, userUpdateModel, { headers }).toPromise();
   }
 
-  deleteUser():Promise<UserDeletedModel> {
+  deleteUser(userDeleteModel: UserDeleteModel):Promise<UserDeletedModel> {
     let authorization = this.auth.getAuthentication();
 
     let headers = new HttpHeaders({
@@ -80,7 +78,7 @@ export class ApiService {
 
     let username = this.jwtHelper.decodeToken(authorization.token).username;
 
-    return this.http.delete<UserDeletedModel>(`${this.host}${this.userRoute}/${username}`, { headers }).toPromise();
+    return this.http.post<UserDeletedModel>(`${this.host}${this.userRoute}/delete/${username}`, userDeleteModel, { headers }).toPromise();
   }
 
   getUser():Promise<UserModel> {
@@ -118,14 +116,6 @@ export class ApiService {
     }
 
     return this.http.post<AvailableModel>(`${this.host}${this.availableRoute}`, body, { headers }).toPromise();
-  }
-
-  encrypt(hashCreateModel:HashCreateModel):Promise<HashModel> {
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
-    return this.http.post<HashModel>(`${this.host}${this.encryptRoute}`, hashCreateModel, { headers }).toPromise();
   }
 
 }
