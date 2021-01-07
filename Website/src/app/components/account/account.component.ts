@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
@@ -23,7 +22,6 @@ export class AccountComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private location: Location,
     private formBuilder: FormBuilder, 
     private api: ApiService, 
     private auth: AuthService

@@ -3,5 +3,8 @@ export class AvailableModel {
         email_address?: boolean;
         username?: boolean;
     };
-    error?: string;
+    error?: {
+        email_address?: string;
+        username?: string;
+    }
 }

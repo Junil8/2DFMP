@@ -1,4 +1,7 @@
 export class UserDeletedModel {
     deleted: boolean;
-    error?: string;
+    error?: {
+        password?: string;
+        authentication?: string;
+    }
 }
