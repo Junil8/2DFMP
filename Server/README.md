@@ -31,6 +31,8 @@ Run `npm start` for starting server.
 To make [Socket.io](https://www.npmjs.com/package/socket.io) run with [Cluster](https://www.npmjs.com/package/cluster), will we be using [ioredis](https://www.npmjs.com/package/ioredis) and [socket.io-redis](https://www.npmjs.com/package/socket.io-redis) to handle the server cache.  
 This is needed becourse when we fork the service out in a cluster, then they will need a commen place to store there cache.
 
+**Custom setup of redis server**
+
 In environment variables add lines.  
 ```
 REDIS_HOST=<ip>
@@ -41,13 +43,13 @@ REDIS_PORT=<port>
 
 ## Encryption Settings
 
+The passwords needs to be encrypted on the database for this we use [crypto-js](https://www.npmjs.com/package/crypto-js).
+
 In environment variables add lines.  
 ```
 SALT_LENGTH=<length>
-ENCRYPT_ALGORITHM=<algorithm>
 ```  
-`<length>` the length of a random salt. Default `6`.  
-`<algorithm>` the given type of algorithm to use. Default `sha256`.
+`<length>` the length of a random salt. Default `6`.
 
 ## Cluster Service
 

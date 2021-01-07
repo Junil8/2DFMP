@@ -1,7 +1,7 @@
 const Express = require('express');
 require('dotenv/config');
 
-const { Salt, SHA256 } = require('../resources/hash');
+const { Salt, Encrypt } = require('../resources/hash');
 const { IsEmail, GoodPassword, GoodUsername } = require('../resources/regex');
 const { Authentication } = require('../middlewares/authentication');
 const UserModel = require('../models/User');
@@ -70,7 +70,7 @@ router.post('/', async (request, response) => {
     
         if (hasError) return response.status(200).json({error: error});
 
-        let hash = SHA256(request.body.password, Salt(process.env.SALT_LENGTH));
+        let hash = Encrypt(request.body.password, Salt());
     
         const userModel = new UserModel({
             username: request.body.username,
@@ -111,7 +111,7 @@ router.patch('/:username', Authentication, async (request, response) => {
         
         if (request.body.newUsername) values.username = request.body.newUsername;
         if (request.body.newPassword) {
-            let hash = SHA256(request.body.newPassword, Salt(process.env.SALT_LENGTH));
+            let hash = Encrypt(request.body.newPassword, Salt());
             values.password = hash.cypher;
             values.password_salt = hash.salt;
         }

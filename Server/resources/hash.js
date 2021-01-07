@@ -1,8 +1,7 @@
-const Crypto = require('crypto');
+const Crypto = require('crypto-js');
 require('dotenv/config');
 
 const salt_length = process.env.SALT_LENGTH || 6;
-const encrypt_algorithm = process.env.ENCRYPT_ALGORITHM || 'sha256';
 
 /**
  * @summary                         Create a random salt of given length
@@ -10,7 +9,7 @@ const encrypt_algorithm = process.env.ENCRYPT_ALGORITHM || 'sha256';
  * @returns {String}                Returns the salt as a string
  */
 const salt = function(){
-    return Crypto.randomBytes(Math.ceil(salt_length / 2)).toString('hex').slice(0, salt_length);
+    return Crypto.lib.WordArray.random(salt_length).toString(Crypto.enc.Base64);
 };
 
 /**
@@ -20,10 +19,7 @@ const salt = function(){
  * @returns {Object}                Returns the hash { salt, cypher }
  */
 const encrypt = function(string, salt) {
-    let hash = Crypto.createHmac(encrypt_algorithm, salt);
-
-    hash.update(string);
-    let cypher = hash.digest('hex');
+    let cypher = Crypto.HmacSHA256(string, salt).toString(Crypto.enc.Base64);
 
     return {
         salt: salt,
