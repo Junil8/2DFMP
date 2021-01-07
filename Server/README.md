@@ -107,5 +107,4 @@ PORT=<port>
 
 | Event | JSON | Description |
 |:-----:| ---- | ----------- |
-|connect|||
 |disconnect|||

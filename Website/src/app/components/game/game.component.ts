@@ -13,6 +13,7 @@ export class GameComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    this.loadScript('/socket.io/socket.io.js');
     this.loadScript('../assets/game.js');
   }
 
