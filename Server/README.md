@@ -19,7 +19,8 @@ ACCESS_TOKEN=<secret_key>
 ```  
 `<user>` the database user.  
 `<password>` the database user password.  
-`<dbname>` the database name.
+`<dbname>` the database name.  
+`<secret_key>` the given secret key to use in JSON Web Token.
 
 **Run Server**
 
