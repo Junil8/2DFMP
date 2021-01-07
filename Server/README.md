@@ -1,62 +1,25 @@
 # Server
 
+This server is running as a cluster managed by package [Cluster](https://www.npmjs.com/package/cluster).  
+It uses [Express](https://www.npmjs.com/package/express) to manage an API and serve a website build by [Angular](https://www.npmjs.com/package/@angular/cli).  
+It also uses [Socket.io](https://www.npmjs.com/package/socket.io) to manage the multiplayer server for the game.
+
+Run `npm start` for starting server.
 
 
-## Running server
+## Redis server
 
-Run `npm start` for starting server. Navigate to `http://localhost:8080/`.
+To make [Socket.io](https://www.npmjs.com/package/socket.io) run with [Cluster](https://www.npmjs.com/package/cluster), will we be using [ioredis](https://www.npmjs.com/package/ioredis) and [socket.io-redis](https://www.npmjs.com/package/socket.io-redis) to handle the server cache.  
+This is needed becourse when we fork the service out in a cluster, then they will need a commen place to store there cache.
 
 ## API
 
-**AUTHENTICATE**
-
-POST `http://localhost:8080/api/token/`  
-JSON `{username: string, password: string}`  
-RETURN `{token: string}`  
-ERROR `{error: string}`
-
-
-**ENCRYPT**
-
-POST `http://localhost:8080/api/encrypt/`  
-JSON `{string: string, salt?: string}`  
-RETURN `{cypher: string, salt: string}`  
-ERROR `{error: string}`
-
-
-**USER AVAILABLE**
-
-POST `http://localhost:8080/api/user/available/`  
-JSON `{email_address?: string, username?: string}`  
-RETURN `{available: {email_address?: boolean, username?: string}}`  
-ERROR `{error: string}` | `{error: {email_address?: string, username?: string}}`
-
-
-**CREATE USER**
-
-POST `http://localhost:8080/api/user/`  
-JSON `{email_address: string, username: string, password: string}`  
-RETURN `{_id: string, email_address: string, username: string, password: string, password_salt: string, created_on: date, last_sign_on: date}`  
-ERROR `{error: string}` | `{error: {email_address?: string, username?: string, password?: string }}`
-
-
-**GET USER** - Require Authentication.
-
-GET `http://localhost:8080/api/user/:username`  
-RETURN `{_id: string, email_address: string, username: string, password: string, password_salt: string, created_on: date, last_sign_on: date}`  
-ERROR `{error: string}`
-
-
-**UPDATE USER** - Require Authentication.
-
-PATCH `http://localhost:8080/api/user/:username`  
-JSON `{newUsername?: string, newPassword?: string}`  
-RETURN `{updated: boolean}`  
-ERROR `{error: string}` | `{error: {username?: string, password?: string }}`
-
-
-**DELETE USER** - Require Authentication.
-
-DELETE `http://localhost:8080/api/user/:username`  
-RETURN `{deleted: boolean}`  
-ERROR `{error: string}`
+| Method | Type | Path | JSON | RETURN | ERROR | Authentication |
+|:------:|:----:| ---- | ---- | ------ | ----- |:--------------:|
+|Authenticate|POST|`/api/token/`|username<br>password|token|error|False|
+|Encrypt|POST|`/api/encrypt/`|string<br>salt?|cypher<br>salt|error|False|
+|User Available|POST|`/api/user/available/`|email_address?<br>username?|available: {<br>&nbsp;&nbsp;&nbsp;&nbsp;email_address?<br>&nbsp;&nbsp;&nbsp;&nbsp;username?<br>}|error<br>**OR**<br>error: {<br>&nbsp;&nbsp;&nbsp;&nbsp;email_address?<br>&nbsp;&nbsp;&nbsp;&nbsp;username?<br>}|False|
+|Get User|GET|`/api/user/:username`||_id<br>email_address<br>username<br>password<br>password_salt<br>created_on<br>last_sign_on|error|True|
+|Create User|POST|`/api/user/`|email_address<br>username<br>password|_id<br>email_address<br>username<br>password<br>password_salt<br>created_on<br>last_sign_on|error<br>**OR**<br>error: {<br>&nbsp;&nbsp;&nbsp;&nbsp;email_address?<br>&nbsp;&nbsp;&nbsp;&nbsp;username?<br>&nbsp;&nbsp;&nbsp;&nbsp;password?<br>}|False|
+|Update User|PATCH|`/api/user/:username`|newUsername?<br>newPassword?|updated|error<br>**OR**<br>error: {<br>&nbsp;&nbsp;&nbsp;&nbsp;username?<br>&nbsp;&nbsp;&nbsp;&nbsp;password?<br>}|True|
+|Delete User|DELETE|`/api/user/:username`||deleted|error|True|
