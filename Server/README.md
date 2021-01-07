@@ -5,11 +5,11 @@ It uses [Express](https://www.npmjs.com/package/express) to manage an API and se
 It also uses [Socket.io](https://www.npmjs.com/package/socket.io) to manage the multiplayer server for the game.  
 For authentication it uses [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken).
 
-**Install**
+**Install Dependencies**
 
 Run `npm install` to install dependencies.
 
-**Setup**
+**Setup Environment**
 
 Make an environment file with name of `.env`.  
 In environment variables add lines.  
@@ -21,7 +21,7 @@ ACCESS_TOKEN=<secret_key>
 `<password>` the database user password.  
 `<dbname>` the database name.
 
-**Run**
+**Run Server**
 
 Run `npm start` for starting server.
 
