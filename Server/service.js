@@ -18,7 +18,6 @@ Mongoose.connect(process.env.MONGO_DB_URI, { useNewUrlParser: true, useUnifiedTo
 // Import routes
 const userRoute = require('./routes/user');
 const tokenRoute = require('./routes/token');
-const encryptRoute = require('./routes/encrypt');
 
 // Apply middlewares
 app.use(BodyParser.json());
@@ -28,7 +27,6 @@ app.use(cors());
 app.use('/', Express.static('public'));
 app.use('/api/user', userRoute);
 app.use('/api/token', tokenRoute);
-app.use('/api/encrypt', encryptRoute);
 
 // Connect IO to redis server
 io.adapter(RedisAdapter({ host: process.env.REDIS_HOST || 'localhost', port: process.env.REDIS_PORT || 6379 }));
