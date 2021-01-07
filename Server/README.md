@@ -15,7 +15,8 @@ REDIS_PORT=6379
 SALT_LENGTH=6
 ACCESS_TOKEN=<secret_key>
 PORT=8080
-```
+```  
+Change `<user>`, `<password>`, `<dbname>` and `<secret_key>`.
 
 Run `npm start` for starting server.
 
