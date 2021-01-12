@@ -86,7 +86,6 @@ router.post('/', async (request, response) => {
         response.status(201).json(user);
     } catch(error) {
         console.log(`Process ${process.pid} - ${error}`);
-
         response.status(500).json({error: `Internal Server Error.`});
     }
 });
@@ -129,7 +128,6 @@ router.patch('/:username', Authentication, async (request, response) => {
         return response.status(200).json({ updated: true });
     } catch(error) {
         console.log(`Process ${process.pid} - ${error}`);
-
         return response.status(500).json({error: `Internal Server Error.`});
     }
 });

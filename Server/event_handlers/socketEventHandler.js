@@ -20,7 +20,7 @@ class SocketEventHandler {
     
         if (!user) return socket.disconnect(true);
         else {
-            const player = { 
+            let player = { 
                 username: user.username,
                 client: socket.client.id,
                 lifes: 3,

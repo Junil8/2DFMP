@@ -3,7 +3,7 @@ import { faExpand } from '@fortawesome/free-solid-svg-icons';
 
 import Phaser from 'phaser';
 import { io, Socket } from 'socket.io-client';
-declare var Game: any;
+declare var PhaserConfig: any;
 
 @Component({
   selector: 'app-game',
@@ -29,22 +29,8 @@ export class GameComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.phaserConfig = {
-      type: Phaser.CANVAS,
-      width: 800,
-      height: 600,
-      canvas: this.display.nativeElement,
-      title: "2DFMP",
-      version: "0.0.1",
-      physics: {
-          default: 'arcade',
-          arcade: {
-              gravity: { y: 300 },
-              debug: false
-          }
-      },
-      scene: [ Game ]
-    };
+    this.phaserConfig = PhaserConfig;
+    this.phaserConfig.canvas = this.display.nativeElement;
 
     this.phaserGame = new Phaser.Game(this.phaserConfig);
   }
