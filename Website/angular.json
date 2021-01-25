@@ -32,6 +32,8 @@
             ],
             "scripts": [
               "node_modules/phaser/dist/phaser.min.js",
+              "node_modules/phaser-matter-collision-plugin/dist/phaser-matter-collision-plugin.min.js",
+              "node_modules/phaser-slopes/dist/phaser-slopes.min.js",
               "node_modules/socket.io-client/dist/socket.io.min.js"
             ]
           },

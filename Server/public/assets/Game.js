@@ -1,17 +1,36 @@
-import { Example } from './scenes/Example.js';
+import { Boot } from './scenes/Boot.js';
+
+const RATIO = self.screen.width / self.screen.height;
+const WIDTH = 800;
+const HEIGHT = WIDTH / RATIO;
 
 self.PhaserConfig = {
     type: Phaser.CANVAS,
-    width: 800,
-    height: 600,
-    title: "2DFMP",
-    version: "0.0.1",
+    backgroundColor: '#21263f',
+    width: WIDTH,
+    height: HEIGHT,
+    title: '2DFMP',
+    version: '0.0.1',
     physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 300 },
-            debug: false
+        default: 'matter',
+        matter: {
+            gravity: {
+                y: 1
+            },
+            debug: true
         }
     },
-    scene: [ Example ]
+    render: {
+        pixelArt: true
+    },
+    plugins: {
+        scene: [
+          {
+            plugin: PhaserMatterCollisionPlugin,
+            key: 'matterCollision',
+            mapping: 'matterCollision'
+          }
+        ]
+    },
+    scene: Boot
 }
