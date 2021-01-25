@@ -1,4 +1,5 @@
-import { Example } from './scenes/Example.js';
+// Skift mellem Example & Test_Julian hvis du vil skifte scene
+import { Test_Julian } from './scenes/Test_Julian.js';
 
 self.PhaserConfig = {
     type: Phaser.CANVAS,
@@ -13,5 +14,5 @@ self.PhaserConfig = {
             debug: false
         }
     },
-    scene: [ Example ]
+    scene: [ Test_Julian ]
 }
