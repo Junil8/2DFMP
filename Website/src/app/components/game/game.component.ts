@@ -2,8 +2,6 @@ import { Component, ElementRef, ViewChild, OnInit, OnDestroy } from '@angular/co
 import { faExpand } from '@fortawesome/free-solid-svg-icons';
 
 import Phaser from 'phaser';
-import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
-import Slopes from 'phaser-slopes';
 import { io, Socket } from 'socket.io-client';
 declare var PhaserConfig: any;
 
@@ -19,8 +17,6 @@ export class GameComponent implements OnInit, OnDestroy {
   socket: Socket;
   phaserGame: Phaser.Game;
   phaserConfig: Phaser.Types.Core.GameConfig;
-  phaserMatterCollisionPlugin: PhaserMatterCollisionPlugin;
-  slopes: Slopes;
 
   constructor() {}
 
@@ -41,6 +37,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.socket.disconnect();
+    this.phaserGame.plugins.removeScenePlugin("matterCollision");
     this.phaserGame.destroy(false);
   }
 

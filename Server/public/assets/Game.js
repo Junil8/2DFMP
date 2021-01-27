@@ -20,17 +20,17 @@ self.PhaserConfig = {
             debug: true
         }
     },
+    plugins: {
+      scene: [
+        {
+          plugin: PhaserMatterCollisionPlugin,
+          key: "matterCollision",
+          mapping: "matterCollision"
+        }
+      ]
+    },
     render: {
         pixelArt: true
-    },
-    plugins: {
-        scene: [
-          {
-            plugin: PhaserMatterCollisionPlugin,
-            key: 'matterCollision',
-            mapping: 'matterCollision'
-          }
-        ]
     },
     scene: Boot
 }

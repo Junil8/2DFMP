@@ -31,7 +31,7 @@ export class Match extends Phaser.Scene {
         this.player.sprite.setDepth(1);
 
         this.cameras.main.setBounds(0, 0, this.map.width, this.map.height);
-        this.cameras.main.startFollow(this.player.body, false, 0.5, 0.5);
+        this.cameras.main.startFollow(this.player.sprite, false, 0.5, 0.5);
         this.cameras.main.setZoom(2);
 
         this.direction = this.input.keyboard.addKeys({

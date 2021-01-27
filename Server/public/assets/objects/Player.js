@@ -5,7 +5,7 @@ export class Player {
     constructor(scene, x, y, sprite_tag) {
         this.scene = scene;
 
-        this.sprite = this.scene.add.sprite(x, y, sprite_tag);
+        this.sprite = this.scene.matter.add.sprite(0, 0, sprite_tag, 0);
 
         this.state = State.idle;
         this.destroyed = false;
@@ -39,8 +39,7 @@ export class Player {
             label: 'player'
         });
 
-        this.body = this.scene.matter.add.gameObject(this.sprite);
-        this.body
+        this.sprite
             .setExistingBody(compound)
             .setFixedRotation()
             .setPosition(x, y)
@@ -99,21 +98,21 @@ export class Player {
             this.canDoubleJump = true;
 
             if (this.state === State.wallSliding) {
-                if (this.touching.left) this.body.setVelocity(PlayerSettings.running_speed, -PlayerSettings.jumping_force);
-                else this.body.setVelocity(-PlayerSettings.running_speed, -PlayerSettings.jumping_force);
+                if (this.touching.left) this.sprite.setVelocity(PlayerSettings.running_speed, -PlayerSettings.jumping_force);
+                else this.sprite.setVelocity(-PlayerSettings.running_speed, -PlayerSettings.jumping_force);
 
-                this.body.toggleFlipX();
-            } else this.body.setVelocityY(-PlayerSettings.jumping_force);
+                this.sprite.toggleFlipX();
+            } else this.sprite.setVelocityY(-PlayerSettings.jumping_force);
 
         } else if (this.canDoubleJump) {
             this.canDoubleJump = false;
 
             if (this.state === State.wallSliding) {
-                if (this.touching.left) this.body.setVelocity(PlayerSettings.running_speed, -PlayerSettings.jumping_force);
-                else this.body.setVelocity(-PlayerSettings.running_speed, -PlayerSettings.jumping_force);
+                if (this.touching.left) this.sprite.setVelocity(PlayerSettings.running_speed, -PlayerSettings.jumping_force);
+                else this.sprite.setVelocity(-PlayerSettings.running_speed, -PlayerSettings.jumping_force);
 
-                this.body.toggleFlipX();
-            } else this.body.setVelocityY(-PlayerSettings.jumping_force);
+                this.sprite.toggleFlipX();
+            } else this.sprite.setVelocityY(-PlayerSettings.jumping_force);
         }
     }
 
@@ -121,17 +120,17 @@ export class Player {
         if (this.destroyed) return;
 
         if (direction < 0) {
-            this.body.setFlipX(true);
+            this.sprite.setFlipX(true);
       
             if (!(!this.touching.ground && this.touching.left)) {
-                this.body.setVelocityX(this.crouching ? -PlayerSettings.crouching_speed : -PlayerSettings.running_speed);
+                this.sprite.setVelocityX(this.crouching ? -PlayerSettings.crouching_speed : -PlayerSettings.running_speed);
                 this.moving = true;
             }
         } else if (direction > 0) {
-            this.body.setFlipX(false);
+            this.sprite.setFlipX(false);
       
             if (!(!this.touching.ground && this.touching.right)) {
-                this.body.setVelocityX(this.crouching ? PlayerSettings.crouching_speed : PlayerSettings.running_speed);
+                this.sprite.setVelocityX(this.crouching ? PlayerSettings.crouching_speed : PlayerSettings.running_speed);
                 this.moving = true;
             }
         } else {
@@ -168,29 +167,29 @@ export class Player {
         if (this.touching.ground && this.moving && this.crouching) this.state = State.sneaking;
         if (this.touching.ground && !this.moving && this.crouching) this.state = State.crouching;
 
-        if (!this.touching.ground && (!this.falling || this.body.body.velocity.y <= 0)) this.state = State.flying;
-        if (!this.touching.ground && (this.falling || this.body.body.velocity.y > 0)) this.state = State.falling;
+        if (!this.touching.ground && (!this.falling || this.sprite.body.velocity.y <= 0)) this.state = State.flying;
+        if (!this.touching.ground && (this.falling || this.sprite.body.velocity.y > 0)) this.state = State.falling;
         if (!this.touching.ground && (this.touching.left || this.touching.right)) this.state = State.wallSliding;
     }
 
     updateFriction() {
         switch(this.state) {
-            case State.wallSliding: this.body.setFriction(0.5); break;
-            default: this.body.setFriction(0.1); break;
+            case State.wallSliding: this.sprite.setFriction(0.5); break;
+            default: this.sprite.setFriction(0.1); break;
         }
     }
 
     updateAnimation() {
         switch(this.state) {
-            case State.running: this.body.anims.play('run', true); break;
-            case State.sneaking: this.body.anims.play('crouch_walk', true); break;
+            case State.running: this.sprite.anims.play('run', true); break;
+            case State.sneaking: this.sprite.anims.play('crouch_walk', true); break;
 
-            case State.falling: this.body.anims.play('fall', true); break;
-            case State.wallSliding: this.body.anims.play('wall_slide', true); break;
-            case State.flying: this.body.anims.play('fly', true); break;
+            case State.falling: this.sprite.anims.play('fall', true); break;
+            case State.wallSliding: this.sprite.anims.play('wall_slide', true); break;
+            case State.flying: this.sprite.anims.play('fly', true); break;
 
-            case State.crouching: this.body.anims.play('crouch', true); break;
-            default: this.body.anims.play('idle', true); break;
+            case State.crouching: this.sprite.anims.play('crouch', true); break;
+            default: this.sprite.anims.play('idle', true); break;
         }
     }
 
@@ -210,6 +209,6 @@ export class Player {
         this.scene.matterCollision.removeOnCollideStart({ objectA: sensors });
         this.scene.matterCollision.removeOnCollideActive({ objectA: sensors });
 
-        this.body.destroy();
+        this.sprite.destroy();
     }
   }

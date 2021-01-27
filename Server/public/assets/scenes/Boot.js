@@ -21,4 +21,8 @@ export class Boot extends Phaser.Scene {
     }
 
     update() {}
+
+    destroy() {
+        this.plugins.removeScenePlugin("matterCollision");
+    }
 }
