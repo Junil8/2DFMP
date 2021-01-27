@@ -6,7 +6,6 @@ import { Settings } from './Settings.js';
 import { MatchLobby } from './MatchLobby.js';
 import { Match } from './Match.js';
 
-
 export class Boot extends Phaser.Scene {
 
     constructor() {
@@ -30,8 +29,4 @@ export class Boot extends Phaser.Scene {
     }
 
     update() {}
-
-    destroy() {
-        this.plugins.removeScenePlugin("matterCollision");
-    }
 }
