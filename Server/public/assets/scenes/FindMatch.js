@@ -1,15 +1,15 @@
 import { MenuMethods } from '../MenuMethods.js';
-export class Settings extends Phaser.Scene {
+export class FindMatch extends Phaser.Scene{
 
     constructor() { 
-        super({key: "Settings"});
+        super({key: "FindMatch"});
     }
 
     Method = new MenuMethods;
-
     create() {
-        this.Method.CreateTitle.call(this, 280, 70, 'Settings', "bold 56px ariel")
+        this.Method.CreateTitle.call(this, 280, 70, 'Find Match', "bold 56px ariel")
         this.Method.CreateButton.call(this, 400, 210, 240, 45, 'Main Menu', 'MainMenu')
-        console.log("You are in settings!!!");
+        console.log("You are in FindMatch!!!");
     }
+    
 }
