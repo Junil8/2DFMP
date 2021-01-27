@@ -1,91 +1,72 @@
+import { PlayerSettings, COLLISION_DAMAGE, COLLISION_PLAYER, COLLISION_WORLD, State } from "./Global.js";
+
 export class Player {
 
-    constructor(scene, x, y, sprite) {
+    constructor(scene, x, y, sprite_tag) {
         this.scene = scene;
 
-        this.scene.anims.createFromAseprite(sprite);
+        this.sprite = this.scene.add.sprite(x, y, sprite_tag);
 
-        // Create the physics-based sprite that we will move around and animate
-        this.sprite = this.scene.matter.add.sprite(0, 0, sprite);
-
-        // The player's body is going to be a compound body that looks something like this:
-        //
-        //                  A = main body
-        //
-        //                   +---------+
-        //                   |         |
-        //                 +-+         +-+
-        //       B = left  | |         | |  C = right
-        //    wall sensor  |B|    A    |C|  wall sensor
-        //                 | |         | |
-        //                 +-+         +-+
-        //                   |         |
-        //                   +-+-----+-+
-        //                     |  D  |
-        //                     +-----+
-        //
-        //                D = ground sensor
-        //
-        // The main body is what collides with the world. The sensors are used to determine if the
-        // player is blocked by a wall or standing on the ground.
+        this.state = State.idle;
+        this.destroyed = false;
+        this.touching = {
+            ground: false,
+            left: false,
+            right: false
+        }
+        this.crouching = false;
+        this.moving = false;
+        this.falling = false;
 
         const { Body, Bodies } = Phaser.Physics.Matter.Matter;
-        const { width, height } = this.sprite;
-        const offset_x = width / 2;
-        const offset_y = height / 2 + 2;
+        const offsetX = this.sprite.width / 2;
+        const offsetY = this.sprite.height / 2 + 2;
+        const width = 18;
+        const height = 32;
+        const radius = 8;
 
-        let body = Bodies.rectangle(offset_x, offset_y, 18, 32, { chamfer: { radius: 10 } });
+        const main =    Bodies.rectangle(offsetX            , offsetY               , width                 , height                , { label: 'main'   , chamfer: { radius: radius }});
+        const left =    Bodies.rectangle(offsetX - width / 4, offsetY               , width / 2             , height - (radius * 2) , { label: 'left'   , isSensor: true });
+        const bottom =  Bodies.rectangle(offsetX            , offsetY + height / 2  , width - (radius * 2)  , 2                     , { label: 'bottom' , isSensor: true });
+        const right =   Bodies.rectangle(offsetX + width / 4, offsetY               , width / 2             , height - (radius * 2) , { label: 'right'  , isSensor: true });
+        const hitbox =  Bodies.rectangle(offsetX            , offsetY               , width                 , height                , { label: 'hitbox' , isSensor: true });
 
-        this.sensors = {
-            bottom: Bodies.rectangle(offset_x, offset_y + 16, 8, 2, { isSensor: true }),
-            left: Bodies.rectangle(offset_x - 9, offset_y, 2, 18, { isSensor: true }),
-            right: Bodies.rectangle(offset_x + 9, offset_y, 2, 18, { isSensor: true })
-        };
-
-        let compound = Body.create({
-            parts: [body, this.sensors.bottom, this.sensors.left, this.sensors.right],
+        const compound = Body.create({
+            parts: [main, left, bottom, right, hitbox],
             frictionStatic: 0,
             frictionAir: 0.02,
-            friction: 0.1
+            friction: 0.1,
+            label: 'player'
         });
 
-        this.sprite.setExistingBody(compound).setFixedRotation().setPosition(x, y);
-        
-        // Track which sensors are touching something
-        this.touching = { left: false, right: false, ground: false };
+        this.body = this.scene.matter.add.gameObject(this.sprite);
+        this.body
+            .setExistingBody(compound)
+            .setFixedRotation()
+            .setPosition(x, y)
+            .setCollisionCategory(COLLISION_PLAYER)
+            .setCollidesWith([COLLISION_WORLD, COLLISION_DAMAGE])
 
-        // Before matter's update, reset the player's count of what surfaces it is touching.
+        this.sensors = {
+            left: left,
+            bottom: bottom,
+            right: right,
+            hitbox: hitbox
+        }
+
         this.scene.matter.world.on("beforeupdate", this.resetTouching, this);
 
         this.scene.matterCollision.addOnCollideStart({
-            objectA: [this.sensors.bottom, this.sensors.left, this.sensors.right],
+            objectA: [this.sensors.left, this.sensors.bottom, this.sensors.right],
             callback: this.onSensorCollide,
             context: this
         });
 
         this.scene.matterCollision.addOnCollideActive({
-            objectA: [this.sensors.bottom, this.sensors.left, this.sensors.right],
+            objectA: [this.sensors.left, this.sensors.bottom, this.sensors.right],
             callback: this.onSensorCollide,
             context: this
         });
-        
-        // Jumping is going to have a cooldown
-        this.canJump = true;
-        this.canDoubleJump = false;
-        this.jumpCooldownTimer = null;
-
-        this.direction = this.scene.input.keyboard.addKeys({
-            up: 'up',
-            down: 'down',
-            left: 'left',
-            right: 'right'
-        });
-
-        this.action = this.scene.input.keyboard.addKeys({
-            jump: 'space'
-        });
-    
-        this.destroyed = false;
 
         this.scene.events.on("update", this.update, this);
         this.scene.events.once("shutdown", this.destroy, this);
@@ -110,63 +91,106 @@ export class Player {
         this.touching.ground = false;
     }
 
+    jump() {
+        if (this.destroyed) return;
+
+        if (this.canJump) {
+            this.canJump = false;
+            this.canDoubleJump = true;
+
+            if (this.state === State.wallSliding) {
+                if (this.touching.left) this.body.setVelocity(PlayerSettings.running_speed, -PlayerSettings.jumping_force);
+                else this.body.setVelocity(-PlayerSettings.running_speed, -PlayerSettings.jumping_force);
+
+                this.body.toggleFlipX();
+            } else this.body.setVelocityY(-PlayerSettings.jumping_force);
+
+        } else if (this.canDoubleJump) {
+            this.canDoubleJump = false;
+
+            if (this.state === State.wallSliding) {
+                if (this.touching.left) this.body.setVelocity(PlayerSettings.running_speed, -PlayerSettings.jumping_force);
+                else this.body.setVelocity(-PlayerSettings.running_speed, -PlayerSettings.jumping_force);
+
+                this.body.toggleFlipX();
+            } else this.body.setVelocityY(-PlayerSettings.jumping_force);
+        }
+    }
+
+    move(direction) {
+        if (this.destroyed) return;
+
+        if (direction < 0) {
+            this.body.setFlipX(true);
+      
+            if (!(!this.touching.ground && this.touching.left)) {
+                this.body.setVelocityX(this.crouching ? -PlayerSettings.crouching_speed : -PlayerSettings.running_speed);
+                this.moving = true;
+            }
+        } else if (direction > 0) {
+            this.body.setFlipX(false);
+      
+            if (!(!this.touching.ground && this.touching.right)) {
+                this.body.setVelocityX(this.crouching ? PlayerSettings.crouching_speed : PlayerSettings.running_speed);
+                this.moving = true;
+            }
+        } else {
+            this.moving = false;
+        }
+    }
+
+    crouch() {
+        if (this.destroyed) return;
+
+        this.crouching = true;
+    }
+
+    stand() {
+        if (this.destroyed) return;
+
+        this.crouching = false;
+    }
+
     update() {
         if (this.destroyed) return;
 
-        let force = this.direction.down.isDown ? 0.0025 : 0.005;
-        let speed = this.direction.down.isDown ? 0.5 : 1;
+        if (this.touching.ground || this.touching.left || this.touching.right) this.canJump = true;
 
-        if (this.touching.ground || this.touching.left || this.touching.right) {
-            this.canJump = true;
+        this.updateState();
+        this.updateFriction();
+        this.updateAnimation();
+    }
+
+    updateState() {
+        this.state = State.idle;
+
+        if (this.touching.ground && this.moving && !this.crouching) this.state = State.running;
+        if (this.touching.ground && this.moving && this.crouching) this.state = State.sneaking;
+        if (this.touching.ground && !this.moving && this.crouching) this.state = State.crouching;
+
+        if (!this.touching.ground && (!this.falling || this.body.body.velocity.y <= 0)) this.state = State.flying;
+        if (!this.touching.ground && (this.falling || this.body.body.velocity.y > 0)) this.state = State.falling;
+        if (!this.touching.ground && (this.touching.left || this.touching.right)) this.state = State.wallSliding;
+    }
+
+    updateFriction() {
+        switch(this.state) {
+            case State.wallSliding: this.body.setFriction(0.5); break;
+            default: this.body.setFriction(0.1); break;
         }
+    }
 
-        if (this.direction.left.isDown) {
-            this.sprite.setFlipX(true);
-      
-            if (!(!this.touching.ground && this.touching.left)) {
-                this.sprite.applyForce({ x: -force, y: 0 });
-            }
-        }
-        
-        if (this.direction.right.isDown) {
-            this.sprite.setFlipX(false);
-      
-            if (!(!this.touching.ground && this.touching.right)) {
-                this.sprite.applyForce({ x: force, y: 0 });
-            }
-        }
+    updateAnimation() {
+        switch(this.state) {
+            case State.running: this.body.anims.play('run', true); break;
+            case State.sneaking: this.body.anims.play('crouch_walk', true); break;
 
-        // Limit horizontal speed, without this the player's velocity would just keep increasing to
-        // absurd speeds. We don't want to touch the vertical velocity though, so that we don't
-        // interfere with gravity.
-        if (this.sprite.body.velocity.x > speed) this.sprite.setVelocityX(speed);
-        if (this.sprite.body.velocity.x < -speed) this.sprite.setVelocityX(-speed);
+            case State.falling: this.body.anims.play('fall', true); break;
+            case State.wallSliding: this.body.anims.play('wall_slide', true); break;
+            case State.flying: this.body.anims.play('fly', true); break;
 
-        if (this.action.jump.isDown && this.canJump) {
-            this.sprite.setVelocityY(-8);
-            this.canJump = false;
-            this.canDoubleJump = true;
-        } else if (this.action.jump.isDown && this.canDoubleJump) {
-            this.sprite.setVelocityY(-8);
-            this.canDoubleJump = false;
-        }
-
-        // Update the animation/texture based on the state of the player's state
-        if (this.touching.ground) {
-            if (this.direction.down.isDown) {
-                if (this.sprite.body.force.x !== 0) this.sprite.anims.play('crouch_walk', true);
-                else this.sprite.anims.play('crouch', true);
-            } else {
-                if (this.sprite.body.force.x !== 0) this.sprite.anims.play('run', true);
-                else this.sprite.anims.play('idle', true);
-            }
-        } else {
-            if (this.sprite.body.velocity.y > 0) this.sprite.anims.play('fall', true);
-            else this.sprite.anims.play('fly', true);
-        }
-
-        if (!this.touching.ground && (this.touching.left || this.touching.right)) {
-            this.sprite.anims.play('wall_slide', true);
+            case State.crouching: this.body.anims.play('crouch', true); break;
+            default: this.body.anims.play('idle', true); break;
         }
     }
 
@@ -186,6 +210,6 @@ export class Player {
         this.scene.matterCollision.removeOnCollideStart({ objectA: sensors });
         this.scene.matterCollision.removeOnCollideActive({ objectA: sensors });
 
-        this.sprite.destroy();
+        this.body.destroy();
     }
   }
