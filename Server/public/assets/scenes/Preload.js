@@ -74,10 +74,10 @@ export class Preload extends Phaser.Scene {
         this.load.aseprite('effects', './assets/graphic/2dfmp/effects/effects.png', './assets/graphic/2dfmp/effects/effects.json');
 
         // GUI
-        this.load.image('big_font', './assets/graphic/2dfmp/gui/big_font.png');
-        this.load.image('font', './assets/graphic/2dfmp/gui/font.png');
-        this.load.image('gui', './assets/graphic/2dfmp/gui/gui.png');
+        this.load.image('checkmark', './assets/graphic/2dfmp/gui/checkmark.png');
+        this.load.image('checkpoint', './assets/graphic/2dfmp/gui/checkpoint.png');
         this.load.image('health', './assets/graphic/2dfmp/gui/health.png');
+        this.load.image('node', './assets/graphic/2dfmp/gui/node.png');
 
         // Tiles
         this.load.image('caves_of_gallet', './assets/graphic/2dfmp/tiles/caves_of_gallet.png');
@@ -87,7 +87,16 @@ export class Preload extends Phaser.Scene {
     }
 
     create() {
-        this.scene.start('MainMenu');
+        this.anims.createFromAseprite('blue_adventure');
+        this.anims.createFromAseprite('cyan_adventure');
+        this.anims.createFromAseprite('green_adventure');
+        this.anims.createFromAseprite('lime_adventure');
+        this.anims.createFromAseprite('orange_adventure');
+        this.anims.createFromAseprite('pink_adventure');
+        this.anims.createFromAseprite('red_adventure');
+        this.anims.createFromAseprite('yellow_adventure');
+
+        this.scene.start('Match');
     }
 
     update() {}

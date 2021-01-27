@@ -1,1 +1,2 @@
 - Lava er "opdelt", medmindre man går helt til højre eller venstre
+- Player sprite not able to change color

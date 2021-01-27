@@ -1,8 +1,18 @@
+import { TestMap } from '../maps/TestMap.js';
 import { Player } from '../objects/Player.js';
 
-export class Match extends Phaser.Scene {
+const Setting = {
+    up: 'UP',
+    left: 'LEFT',
+    down: 'DOWN',
+    right: 'RIGHT',
+    jump: 'SPACE',
+    punch: 'Z',
+    kick: 'X',
+    menu: 'ESC'
+}
 
-    player;
+export class Match extends Phaser.Scene {
 
     constructor() {
         super({ key: "Match" });
@@ -13,38 +23,35 @@ export class Match extends Phaser.Scene {
     }
 
     create() {
-        const map = this.make.tilemap({ key: 'test_map' });
+        this.map = new TestMap(this);
 
-        const tileset = map.addTilesetImage('caves_of_gallet', 'caves_of_gallet');
+        this.player = new Player(this, this.map.spawn1.x, this.map.spawn1.y, 'red_adventure');
+        this.player2 = new Player(this, this.map.spawn2.x, this.map.spawn2.y, 'green_adventure');
+        
+        this.player.sprite.setDepth(1);
 
-        const fluidLayer = map.createLayer('fluid', tileset, 0, 0);
-        const fallsLayer = map.createLayer('falls', tileset, 0, 0);
-        const platformsLayer = map.createLayer('platforms', tileset, 0, 0);
-        const foliageLayer = map.createLayer('foliage', tileset, 0, 0);
-
-        fluidLayer.setCollisionByProperty({ collides: true });
-        fallsLayer.setCollisionByProperty({ collides: true });
-        platformsLayer.setCollisionByProperty({ collides: true });
-        foliageLayer.setCollisionByProperty({ collides: true });
-
-        this.matter.world.convertTilemapLayer(fluidLayer);
-        this.matter.world.convertTilemapLayer(fallsLayer);
-        this.matter.world.convertTilemapLayer(platformsLayer);
-        this.matter.world.convertTilemapLayer(foliageLayer);
-
-        const spawn_1 = map.findObject("objects", obj => obj.name === "spawn_1");
-        const spawn_2 = map.findObject("objects", obj => obj.name === "spawn_2");
-        const spawn_3 = map.findObject("objects", obj => obj.name === "spawn_3");
-        const spawn_4 = map.findObject("objects", obj => obj.name === "spawn_4");
-
-        this.player = new Player(this, spawn_1.x, spawn_1.y, "red_adventure");
-
-        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-        this.cameras.main.startFollow(this.player.sprite, false, 0.5, 0.5);
+        this.cameras.main.setBounds(0, 0, this.map.width, this.map.height);
+        this.cameras.main.startFollow(this.player.body, false, 0.5, 0.5);
         this.cameras.main.setZoom(2);
+
+        this.direction = this.input.keyboard.addKeys({
+            up: Setting.up,
+            left: Setting.left,
+            down: Setting.down,
+            right: Setting.right
+        });
+
+        this.input.keyboard.on('keydown-' + Setting.jump, () => this.player.jump());
+        this.input.keyboard.on('keydown-' + Setting.punch, () => this.player.punch());
+        this.input.keyboard.on('keydown-' + Setting.kick, () => this.player.kick());
     }
 
     update() {
+        if (this.direction.left.isDown) this.player.move(-1);
+        else if (this.direction.right.isDown) this.player.move(1);
+        else this.player.move(0);
 
+        if (this.direction.down.isDown) this.player.crouch();
+        else this.player.stand();
     }
 }
