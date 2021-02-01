@@ -30,6 +30,8 @@ export class MenuMethods {
                 func();
             }
         }, this);
+        let ButtonDone = [button, buttonText]
+        return ButtonDone;
     }
 
 }
