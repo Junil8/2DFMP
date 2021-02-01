@@ -9,14 +9,15 @@ export class MainMenu extends Phaser.Scene {
 
     preload() {
     }
+
     // Creates the main menu
     create() {
-        this.Method.CreateTitle.call(this, 280, 70, '2 D F M P', "bold 56px ariel");
+        this.add.image(this.cameras.main.width / 2, 90, 'title');
         this.Method.CreateBorder.call(this, 400, 175, 300, 2);
-        this.Method.CreateButton.call(this, 400, 210, 240, 45, 'Find Match', 'FindMatch');
-        this.Method.CreateButton.call(this, 400, 270, 240, 45, 'Create Lobby', 'CreateLobby');
-        this.Method.CreateButton.call(this, 400, 330, 240, 45, 'Settings', 'Settings');
-        this.Method.CreateBorder.call(this, 400, 365, 300, 2)
+        this.Method.CreateButton.call(this, 400, 210, 240, 45, 'Find Match', () => { this.scene.start('FindMatch') });
+        this.Method.CreateButton.call(this, 400, 270, 240, 45, 'Create Lobby',() => { this.scene.start('CreateLobby') });
+        this.Method.CreateButton.call(this, 400, 330, 240, 45, 'Settings', () => { this.scene.start('Settings') });
+        this.Method.CreateBorder.call(this, 400, 365, 300, 2);
     }
     update() {
     }
