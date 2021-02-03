@@ -3,7 +3,8 @@ export class MenuMethods {
     constructor() { }
     //Creates a Border
     CreateBorder(x, y, w, h) {
-        this.add.rectangle(x, y, w, h, 0x595652);
+        let Border = this.add.rectangle(x, y, w, h, 0x595652);
+        return Border;
     }
     // Creates a button with text
     CreateButton(x, y, w, h, string, func) {
@@ -33,5 +34,4 @@ export class MenuMethods {
         let ButtonDone = [button, buttonText]
         return ButtonDone;
     }
-
 }

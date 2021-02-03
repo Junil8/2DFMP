@@ -9,51 +9,39 @@ export class Settings extends Phaser.Scene {
     Method = new MenuMethods;
 
     create() {
-        this.add.text(50, 30, 'Settings', { font: "bold 48px Monospace" });
-        this.Method.CreateBorder.call(this, 165, 95, 250, 2);
-        this.Method.CreateButton.call(this, 165, 150, 200, 45, 'Movement', () => { this.CreateMovementButtons() });
-        this.Method.CreateButton.call(this, 165, 200, 200, 45, 'Combat', () => { this.CreateCombatButtons() });
-        this.Method.CreateButton.call(this, 165, 250, 200, 45, 'Sound', () => { this.testfunc(), testgroup.toggleVisible() });
-        this.Method.CreateButton.call(this, 165, 300, 200, 45, 'Return', () => { this.scene.start('MainMenu') });
 
-
-        // var testgroup = this.add.group();
-        // var sprite = this.add.sprite(400, 300, 'Buttontest').setInteractive();
-        // sprite.on('pointerover', () => {
-        //     console.log("Hejsa");
-        //     testgroup.toggleVisible()
-        // });
-        // testgroup.add(sprite);
-
-        // var kage = this.add.text(400, 140, 'KAGE', { font: "bold 22px Monospace" });
-        // var testgroup = this.add.group();
-        // var XD = this.Method.CreateButton.call(this, 600, 150, 200, 45, 'Hey', () => { alert('hej') });
-        // testgroup.add(XD[1]);
-
-
+        // 0x21263f
         try {
-            var Ccontainer = this.add.container(0, 0);
-            var test1 = this.add.sprite(500, 200, 'Buttontest');
-            var test2 = this.add.sprite(500, 300, 'Buttontest');
-            var test3 = this.add.sprite(500, 400, 'Buttontest');
-            Ccontainer.add([test1, test2, test3]);
-           // Ccontainer.visible = false;
+            var width = this.cameras.main.width;
+            var height = this.cameras.main.height;
+            var firkant = this.add.rectangle(width / 2, height / 10, width, height, 0xFFFFFF).setInteractive();
 
+
+            var scrollContainer = this.add.container(0, 0);
+            var overskrift = this.add.text(50, 30, 'Settings', { font: "bold 48px Monospace" });
+            var border = this.Method.CreateBorder.call(this, 165, 95, 250, 2);
+            var knap = this.Method.CreateButton.call(this, 165, 300, 200, 45, 'Return', () => { scrollContainer.y++; });
+            scrollContainer.add([overskrift, border, knap[0], knap[1]]);
+
+            try {
+                this.bringToTop(scrollContainer);
+            }
+            catch (Error) {
+                console.error(Error), console.log("WTF");
+            }
+            firkant.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
+                console.log("Cool");
+                console.log("Cool!");
+                if (deltaX > 0) { scrollContainer.y += deltaX * 5; }
+                else if (deltaX < 0) { scrollContainer.y += deltaX * 5; }
+
+            });
         }
         catch (Error) {
-            console.error(Error);
+            console.error(Error), console.log("WTF");
         }
-
     }
 
-    update() {
-
-    }
-
-    testfunc() {
-        console.log("test func kører")
-
-    }
 
     CreateMovementButtons() {
         this.add.text(400, 140, 'UP', { font: "bold 22px Monospace" });
