@@ -14,7 +14,6 @@ export class Boot extends Phaser.Scene {
 
     preload() {
         this.load.image('title', './assets/graphic/2dfmp/gui/title.png');
-        this.load.image('Buttontest', './assets/graphic/2dfmp/gui/ButtonTest.png');
     }
     
     create() {

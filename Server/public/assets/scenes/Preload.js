@@ -96,7 +96,7 @@ export class Preload extends Phaser.Scene {
         this.anims.createFromAseprite('red_adventure');
         this.anims.createFromAseprite('yellow_adventure');
 
-        this.scene.start('Match');
+        this.scene.start('Settings');
     }
 
     update() {}
