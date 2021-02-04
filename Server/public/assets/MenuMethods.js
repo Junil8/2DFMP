@@ -26,8 +26,30 @@ export class MenuMethods {
             if (typeof func == 'function') {
                 func();
             }
-        }, this);
+        });
         let ButtonDone = [button, buttonText]
         return ButtonDone;
+    }
+
+
+    // Prototype: Not finished!!!
+    CreateSettingsMusic(sliderXMin, sliderXMax) {
+
+        let sliderXDifference = sliderXMax - sliderXMin;
+        let sliderPosition;
+
+        let node = this.add.image(275, 185, 'node');
+        let border = this.add.rectangle(400, 190, 200, 4, 0x99948d);
+        let slider = this.add.rectangle(sliderXMax, 190, 12, 17, 0xFFFFFF).setStrokeStyle(1, 0x595652).setInteractive();
+
+        this.input.setDraggable(slider);
+        this.input.on('drag', (pointer, gameObject, dragX, dragY) => {
+            if (dragX <= sliderXMax && dragX >= sliderXMin) gameObject.x = dragX;
+
+            sliderPosition = slider.x - sliderXMin;
+            console.log(Math.floor(sliderPosition) * 100 / sliderXDifference + " %");
+        });
+        let musicArray = [node, border, slider];
+        return musicArray;
     }
 }
