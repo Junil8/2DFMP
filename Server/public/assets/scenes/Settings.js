@@ -15,35 +15,27 @@ export class Settings extends Phaser.Scene {
         let centerX = this.cameras.main.width / 2;
         let scrollContainer = this.add.container(0, 0);
 
-
-        
-
+        // Laver alle sidens knapper og text.
+        let headerArray = this.CreateSettingsHeader(centerX);
+        let musicArray = this.Method.CreateSettingsMusic.call(this, 300, 500);
+        let textBodyStyling = this.CreateSettingsTexts();
+        let buttonArray = this.CreateSettingsButtons(centerX, 190, 55);
 
         // Tilføjer sidens knapper/text etc til en container. Den bliver brugt til at "scrolle" på siden.
-        scrollContainer.add(this.CreateSettingsHeader(centerX));
-        scrollContainer.add(this.Method.CreateSettingsMusic.call(this,300,500));
-        scrollContainer.add(this.CreateScrollbar());
-        scrollContainer.add(this.CreateSettingsTexts());
-        scrollContainer.add(this.CreateSettingsButtons(centerX, 190, 55));
+        scrollContainer.add(headerArray);
+        scrollContainer.add(musicArray);
+        scrollContainer.add(textBodyStyling);
+        scrollContainer.add(buttonArray);
 
-        console.log(scrollContainer.exists(scrollbarArray[0]));
-        // Bagrunden checker om mousewheel bliver brugt. hvis det overholder if statement rykkes alle objekter som er tilføjet i scrollContainer
+        // Bagrunden checker om mousewheel bliver brugt. hvis det overholder if statement rykkes alle objekter som er tilføjet i scrollContainer.
         // deltaY er den værdig som mousewheel er på.
         this.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
-            if (deltaY < 0 && scrollContainer.y < 0) scrollContainer.y -= deltaY * 15;// Scroll up
-            else if (deltaY > 0 && scrollContainer.y > -220) scrollContainer.y -= deltaY * 15; // Scroll down
-            
-
+            if (deltaY < 0 && scrollContainer.y < 0) scrollContainer.y -= deltaY * 15; // Scroll up 
+            else if (deltaY > 0 && scrollContainer.y > -220) scrollContainer.y -= deltaY * 15; // Scroll down 
         });
+
     }
 
-    CreateScrollbar(){
-        let border = this.add.rectangle(575, 410, 3, 490, 0x99948d);
-        let button = this.add.image(575,170,'checkpointwhite');
-        let scrollbarArray = [border, button];
-        return scrollbarArray;
-    }
-    
     // Laver en overskrift, border samt return knap til mainmenu
     // Bliver samlet i et array og tilføjes til scrollContainer i Create()
     CreateSettingsHeader(x) {
