@@ -17,7 +17,7 @@ self.PhaserConfig = {
             gravity: {
                 y: 1
             },
-            debug: false
+            debug: true
         }
     },
     plugins: {

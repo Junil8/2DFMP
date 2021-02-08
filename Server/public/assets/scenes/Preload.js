@@ -52,14 +52,7 @@ export class Preload extends Phaser.Scene {
         });
 
         // Character Adventure
-        this.load.aseprite('blue_adventure', './assets/graphic/2dfmp/characters/adventure/blue_adventure.png', './assets/graphic/2dfmp/characters/adventure/blue_adventure.json');
-        this.load.aseprite('cyan_adventure', './assets/graphic/2dfmp/characters/adventure/cyan_adventure.png', './assets/graphic/2dfmp/characters/adventure/cyan_adventure.json');
-        this.load.aseprite('green_adventure', './assets/graphic/2dfmp/characters/adventure/green_adventure.png', './assets/graphic/2dfmp/characters/adventure/green_adventure.json');
-        this.load.aseprite('lime_adventure', './assets/graphic/2dfmp/characters/adventure/lime_adventure.png', './assets/graphic/2dfmp/characters/adventure/lime_adventure.json');
-        this.load.aseprite('orange_adventure', './assets/graphic/2dfmp/characters/adventure/orange_adventure.png', './assets/graphic/2dfmp/characters/adventure/orange_adventure.json');
-        this.load.aseprite('pink_adventure', './assets/graphic/2dfmp/characters/adventure/pink_adventure.png', './assets/graphic/2dfmp/characters/adventure/pink_adventure.json');
-        this.load.aseprite('red_adventure', './assets/graphic/2dfmp/characters/adventure/red_adventure.png', './assets/graphic/2dfmp/characters/adventure/red_adventure.json');
-        this.load.aseprite('yellow_adventure', './assets/graphic/2dfmp/characters/adventure/yellow_adventure.png', './assets/graphic/2dfmp/characters/adventure/yellow_adventure.json');
+        this.load.aseprite('adventure', './assets/graphic/2dfmp/characters/adventure/adventure.png', './assets/graphic/2dfmp/characters/adventure/adventure.json');
 
         this.load.image('blue_adventure_icon', './assets/graphic/2dfmp/characters/adventure/blue_adventure_icon.png');
         this.load.image('cyan_adventure_icon', './assets/graphic/2dfmp/characters/adventure/cyan_adventure_icon.png');
@@ -87,14 +80,7 @@ export class Preload extends Phaser.Scene {
     }
 
     create() {
-        this.anims.createFromAseprite('blue_adventure');
-        this.anims.createFromAseprite('cyan_adventure');
-        this.anims.createFromAseprite('green_adventure');
-        this.anims.createFromAseprite('lime_adventure');
-        this.anims.createFromAseprite('orange_adventure');
-        this.anims.createFromAseprite('pink_adventure');
-        this.anims.createFromAseprite('red_adventure');
-        this.anims.createFromAseprite('yellow_adventure');
+        this.anims.createFromAseprite('adventure');
 
         this.scene.start('Match');
     }

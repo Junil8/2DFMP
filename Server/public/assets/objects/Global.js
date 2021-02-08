@@ -1,5 +1,6 @@
+export const COLLISION_DEFAULT = 0x1000;
 export const COLLISION_WORLD = 0x0001;
-export const COLLISION_PLAYER = 0x0010;
+export const COLLISION_CHARACTER = 0x0010;
 export const COLLISION_DAMAGE = 0x0100;
 
 if (self.localStorage.getItem('up_key') === null) self.localStorage.setItem('up_key', 'UP');
@@ -10,23 +11,22 @@ if (self.localStorage.getItem('jump_key') === null) self.localStorage.setItem('j
 if (self.localStorage.getItem('punch_key') === null) self.localStorage.setItem('punch_key', 'X');
 if (self.localStorage.getItem('kick_key') === null) self.localStorage.setItem('kick_key', 'Z');
 
-export const PlayerState = {
-    idle: 0,
-    crouching: 1,
-    running: 2,
-    sneaking: 3,
-    wallSliding: 4,
-    flying: 5,
-    falling: 6,
-    punching1: 7,
-    punching2: 8,
-    punching3: 9,
-    kicking1: 10,
-    kicking2: 11,
-    knockedDown: 12,
-    gettingUp: 13,
-    sliding: 14,
-    standing: 15
+export const PlayerAnimation = {
+    idle: 'idle',
+    crouching: 'crouch',
+    running: 'run',
+    sneaking: 'crouch_walk',
+    wallSliding: 'wall_slide',
+    jumping: 'fly',
+    falling: 'fall',
+    punching1: 'punch_1',
+    punching2: 'punch_2',
+    punching3: 'punch_3',
+    punchingWhileRunning: 'run_punch',
+    kicking1: 'kick_1',
+    kicking2: 'kick_2',
+    knockedDown: 'knock_down',
+    gettingUp: 'get_up',
 }
 
 export const PlayerSettings = {
