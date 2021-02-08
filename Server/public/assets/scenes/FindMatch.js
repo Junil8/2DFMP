@@ -1,15 +1,34 @@
 import { MenuMethods } from '../MenuMethods.js';
-export class FindMatch extends Phaser.Scene{
+export class FindMatch extends Phaser.Scene {
 
-    constructor() { 
-        super({key: "FindMatch"});
+    constructor() {
+        super({ key: "FindMatch" });
+    }
+
+    preload(){
+        this.load.html('LobbyCode', './assets/TextInput/LobbyCode.html');
     }
 
     Method = new MenuMethods;
     create() {
-        this.Method.CreateTitle.call(this, 280, 70, 'Find Match', "bold 56px ariel")
-        this.Method.CreateButton.call(this, 400, 210, 240, 45, 'Main Menu', 'MainMenu')
-        console.log("You are in FindMatch!!!");
+
+        try{
+        var testelement = this.add.dom(200, 100).createFromCache('LobbyCode');
+        console.log("Add element");
+        }
+        catch(error){console.error(error)}
+
+        let centerX = this.cameras.main.width / 2;
+
+        let textHeading = this.add.text(centerX, 50, 'Find Match', { font: "bold 48px Monospace" }).setOrigin(0.5);
+        let buttonReturn = this.Method.CreateButton.call(this, centerX, 130, 240, 45, 'Return', () => { this.scene.start('MainMenu') })
+        let borderTop = this.add.rectangle(centerX, 165, 300, 2, 0x595652);
+        let button1v1 = this.Method.CreateButton.call(this, centerX, 200, 240, 45, 'Find 1v1', () => { this.scene.start('MatchLobby') })
+        let button2v2 = this.Method.CreateButton.call(this, centerX, 255, 240, 45, 'Find 2v2', () => { this.scene.start('MatchLobby') })
+        let borderbot = this.add.rectangle(centerX, 290, 300, 2, 0x595652);
+        let lobbyCode = this.Method.CreateButton.call(this, centerX, 325, 240, 45, 'Lobby Code:', () => { this.scene.start('Match') })
+        let buttonJoin = this.Method.CreateButton.call(this, centerX + 70, 380, 100, 45, 'Join', () => { this.scene.start('Match') })
+   
     }
-    
+
 }

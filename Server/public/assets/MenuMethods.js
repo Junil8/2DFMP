@@ -1,39 +1,55 @@
 export class MenuMethods {
 
     constructor() { }
-    // Creates a Title
-    CreateTitle(x, y, string, font) {
-        this.add.text(x, y, string, { font: font });
-    }
-    //Creates a Border
-    CreateBorder(x, y, w, h) {
-        this.add.rectangle(x, y, w, h, 0x595652);
-    }
-    /* !Muligvis ændres! 
-    Hvis der skal bruges knapper som ikke bruger scener skal denne metode måske ændres! 
-    */
+
     // Creates a button with text
-    CreateButton(x, y, w, h, string, scene) {
+    CreateButton(x, y, w, h, string, func) {
         // Button & text colors
         let colorBase = 0xFFFFFF, colorOver = 0xcbdbfc, colorDown = 0xadbcde, colorBorder = 0x595652, colorText = 0x595652;
         // Creates a rectangle and makes it interactive
-        let button = this.add.rectangle(x, y, w, h, colorBase).setStrokeStyle(2, colorBorder).setInteractive();
+        let button = this.add.rectangle(x, y, w, h, colorBase).setStrokeStyle(1, colorBorder).setInteractive();
         // Creates text and centers it inside button
-        let buttonText = this.add.text(button.x, button.y, string, { font: "bold 24px arial", color: colorText });
+        let buttonText = this.add.text(button.x, button.y, string, { font: "bold 22px monospace", color: colorText });
         Phaser.Display.Align.In.Center(buttonText, button);
         // Creates button events
-        button.on('pointerover', function () {
+        button.on('pointerover', () => {
             button.setFillStyle(colorOver);
         });
-        button.on('pointerout', function () {
+        button.on('pointerout', () => {
             button.setFillStyle(colorBase);
         });
-        button.on('pointerdown', function () {
+        button.on('pointerdown', () => {
             button.setFillStyle(colorDown);
         });
-        button.on('pointerup', function () {
+        button.on('pointerup', () => {
             button.setFillStyle(colorOver);
-            this.scene.start(scene);
-        }, this);
+            if (typeof func == 'function') {
+                func();
+            }
+        });
+        let ButtonDone = [button, buttonText]
+        return ButtonDone;
+    }
+
+
+    // Prototype: Not finished!!!
+    CreateSettingsMusic(sliderXMin, sliderXMax) {
+
+        let sliderXDifference = sliderXMax - sliderXMin;
+        let sliderPosition;
+
+        let node = this.add.image(275, 185, 'node');
+        let border = this.add.rectangle(400, 190, 200, 4, 0x99948d);
+        let slider = this.add.rectangle(sliderXMax, 190, 12, 17, 0xFFFFFF).setStrokeStyle(1, 0x595652).setInteractive();
+
+        this.input.setDraggable(slider);
+        this.input.on('drag', (pointer, gameObject, dragX, dragY) => {
+            if (dragX <= sliderXMax && dragX >= sliderXMin) gameObject.x = dragX;
+
+            sliderPosition = slider.x - sliderXMin;
+            console.log(Math.floor(sliderPosition) * 100 / sliderXDifference + " %");
+        });
+        let musicArray = [node, border, slider];
+        return musicArray;
     }
 }
