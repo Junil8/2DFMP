@@ -5,18 +5,16 @@ export class FindMatch extends Phaser.Scene {
         super({ key: "FindMatch" });
     }
 
-    preload(){
+    preload() {
         this.load.html('LobbyCode', './assets/TextInput/LobbyCode.html');
     }
 
     Method = new MenuMethods;
     create() {
 
-        try{
-        var testelement = this.add.dom(200, 100).createFromCache('LobbyCode');
-        console.log("Add element");
-        }
-        catch(error){console.error(error)}
+
+
+
 
         let centerX = this.cameras.main.width / 2;
 
@@ -26,9 +24,10 @@ export class FindMatch extends Phaser.Scene {
         let button1v1 = this.Method.CreateButton.call(this, centerX, 200, 240, 45, 'Find 1v1', () => { this.scene.start('MatchLobby') })
         let button2v2 = this.Method.CreateButton.call(this, centerX, 255, 240, 45, 'Find 2v2', () => { this.scene.start('MatchLobby') })
         let borderbot = this.add.rectangle(centerX, 290, 300, 2, 0x595652);
-        let lobbyCode = this.Method.CreateButton.call(this, centerX, 325, 240, 45, 'Lobby Code:', () => { this.scene.start('Match') })
         let buttonJoin = this.Method.CreateButton.call(this, centerX + 70, 380, 100, 45, 'Join', () => { this.scene.start('Match') })
-   
+        let lobbyCodeForm = this.add.dom( centerX + 99, 405).createFromCache('LobbyCode');
+     //   let lobbyCode = this.Method.CreateButton.call(this, centerX, 325, 240, 45, 'Lobby Code:', () => { this.scene.start('Match') })
+
     }
 
 }

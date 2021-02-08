@@ -1,3 +1,4 @@
 - Lava er "opdelt", medmindre man går helt til højre eller venstre
 - Player sprite not able to change color
 - Når man går i fuldscreen og tilbage sker der i nogle scener en visual bug. Hvide linjer nederst i "phaser canvas" (Ikke et stort problem)
+- Fuldscreen viser ikke HTML inde i phaser. Løsning: https://www.html5gamedevs.com/topic/20793-cant-see-html-elements-when-phaser-fullscreen-is-used/

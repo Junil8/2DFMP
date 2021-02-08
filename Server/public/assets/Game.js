@@ -11,7 +11,7 @@ self.PhaserConfig = {
     height: HEIGHT,
     title: '2DFMP',
     version: '0.0.1',
-    //parent: "game-view",
+    parent: "PhaserId",
     dom: {createContainer: true},
     physics: {
         default: 'matter',

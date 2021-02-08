@@ -72,6 +72,7 @@ export class Preload extends Phaser.Scene {
         this.load.image('checkpointwhite', './assets/graphic/2dfmp/gui/checkpointwhite.png');
         this.load.image('health', './assets/graphic/2dfmp/gui/health.png');
         this.load.image('node', './assets/graphic/2dfmp/gui/node.png');
+        this.load.image('template', './assets/graphic/2dfmp/gui/Template.png')
 
         // Tiles
         this.load.image('caves_of_gallet', './assets/graphic/2dfmp/tiles/caves_of_gallet.png');
@@ -83,7 +84,7 @@ export class Preload extends Phaser.Scene {
     create() {
         this.anims.createFromAseprite('adventure');
 
-        this.scene.start('FindMatch');
+        this.scene.start('MainMenu');
     }
 
     update() {}

@@ -25,7 +25,7 @@ export class GameComponent implements OnInit, OnDestroy {
   ngAfterViewInit(): void {
     this.socket = io(window.location.origin, {
       query: {
-          authorization: window.localStorage.getItem('token'),
+          authorization: window.localStorage.getItem('token')!,
       }
     });
 
