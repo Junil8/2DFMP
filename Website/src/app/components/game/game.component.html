@@ -1,8 +1,11 @@
 <app-dropmenu></app-dropmenu>
 <section id="sectionid" #section>
-    <div id="PhaserId"></div>
-    <canvas id="game-view" #display>
-        Your browser does not support the HTML canvas tag.
-    </canvas>
-    <button (click)="onClickFullscreen()"><fa-icon [icon]="faExpand"></fa-icon>Fullscreen</button>
+    <div id="PhaserId">
+        <canvas id="game-view" #display>
+            Your browser does not support the HTML canvas tag.
+        </canvas>
+    </div>
+    <button (click)="onClickFullscreen()">
+        <fa-icon [icon]="faExpand"></fa-icon>Fullscreen
+    </button>
 </section>

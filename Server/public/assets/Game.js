@@ -12,7 +12,7 @@ self.PhaserConfig = {
     title: '2DFMP',
     version: '0.0.1',
     parent: "PhaserId",
-    dom: {createContainer: true},
+    dom: { createContainer: true },
     physics: {
         default: 'matter',
         matter: {

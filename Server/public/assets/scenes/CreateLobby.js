@@ -20,9 +20,10 @@ export class CreateLobby extends Phaser.Scene {
         let buttonPrivate = this.Method.CreateButton.call(this, centerX, 280, 200, 45, 'Private', () => { console.log("Private") })
 
         // temporary map images
-        var imageMap1 = this.add.image(centerX - 150, 350, "map1");
-        var imageTemplate2 = this.add.image(centerX, 350, "template");
-        var imageTemplate3 = this.add.image(centerX + 150, 350, "template");
+        let imageMap1 = this.add.image(centerX - 150, 350, "map1");
+        let imageTemplate2 = this.add.image(centerX, 350, "template");
+        let imageTemplate3 = this.add.image(centerX + 150, 350, "template");
         let buttonCreateLobby = this.Method.CreateButton.call(this, centerX, 420, 150, 40, 'Create', () => { this.scene.start('Match') })
+
     }
 }

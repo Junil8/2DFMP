@@ -1,0 +1,5 @@
+https://www.html5gamedevs.com/topic/20793-cant-see-html-elements-when-phaser-fullscreen-is-used/
+
+https://github.com/photonstorm/phaser/issues/4335
+
+https://www.w3schools.com/howto/howto_js_active_element.asp

@@ -25,5 +25,4 @@ export class FindMatch extends Phaser.Scene {
         let formLobbyCode = this.add.dom( centerX - 70, 270).createFromCache('LobbyCode');
         let buttonJoin = this.Method.CreateButton.call(this, centerX + 70, 385, 100, 45, 'Join', () => { this.scene.start('Match') })
     }
-
 }
