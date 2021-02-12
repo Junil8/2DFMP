@@ -1,7 +1,8 @@
 import { Component, ElementRef, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { faExpand } from '@fortawesome/free-solid-svg-icons';
+import { Body } from 'matter';
 
-import Phaser from 'phaser';
+import Phaser, { Game } from 'phaser';
 import { io, Socket } from 'socket.io-client';
 declare var PhaserConfig: any;
 
@@ -18,19 +19,19 @@ export class GameComponent implements OnInit, OnDestroy {
   phaserGame: Phaser.Game;
   phaserConfig: Phaser.Types.Core.GameConfig;
 
-  constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngAfterViewInit(): void {
     this.socket = io(window.location.origin, {
       query: {
-          authorization: window.localStorage.getItem('token')!,
+        authorization: window.localStorage.getItem('token')!,
       }
     });
 
     this.phaserConfig = PhaserConfig;
     this.phaserConfig.canvas = this.display.nativeElement;
+
 
     this.phaserGame = new Phaser.Game(this.phaserConfig);
   }
@@ -42,7 +43,8 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   onClickFullscreen() {
-    this.display.nativeElement.requestFullscreen();
+    //this.display.nativeElement.requestFullscreen();
+    document.getElementById('gamediv')?.requestFullscreen();
   }
 
 }
