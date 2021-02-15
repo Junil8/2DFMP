@@ -11,6 +11,8 @@ export class MenuMethods {
         // Creates text and centers it inside button
         let buttonText = this.add.text(button.x, button.y, string, { font: "bold 22px monospace", color: colorText });
         Phaser.Display.Align.In.Center(buttonText, button);
+        // Variable for checking if the button is selected
+        let buttonSelected = false;
         // Creates button events
         button.on('pointerover', () => {
             button.setFillStyle(colorOver);
@@ -23,10 +25,9 @@ export class MenuMethods {
         });
         button.on('pointerup', () => {
             button.setFillStyle(colorOver);
-            if (typeof func == 'function') {
-                func();
-            }
+            if (typeof func == 'function') { func(); }
         });
+
         let ButtonDone = [button, buttonText]
         return ButtonDone;
     }

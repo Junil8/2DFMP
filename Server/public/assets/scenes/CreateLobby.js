@@ -3,9 +3,11 @@ export class CreateLobby extends Phaser.Scene {
 
     constructor() {
         super({ key: "CreateLobby" });
+
     }
 
     Method = new MenuMethods;
+
     create() {
 
         let centerX = this.cameras.main.width / 2;
@@ -23,28 +25,47 @@ export class CreateLobby extends Phaser.Scene {
         let imageTemplate3 = this.add.image(centerX + 150, 350, "template");
         let buttonCreateLobby = this.Method.CreateButton.call(this, centerX, 420, 150, 40, 'Create', () => { this.scene.start('Match') })
 
-        let buttonTest = this.add.rectangle(275,170,40,40, 0xFFFFFF);
-        let buttonTest2 = this.add.rectangle(275,225,40,40, 0xFFFFFF);
-        let buttonTest3 = this.add.rectangle(275,280,40,40, 0xFFFFFF);
-        
+        let buttonTest1 = this.add.rectangle(100, 100, 100, 50, 0xFFFFFF);
+
+        let arrayLobbyPlayers = ["1v1", "2v2"];
+        let boolLobbyPrivate = false; 
+        let arrayLobbyMap = ["map1", "map2", "map3"]
+
+
+        this.kage(buttonTest1);
+
     }
 
-  
-    // Test(x,y,w,h) {
-    //     let buttonTest = this.add.rectangle(x,y,w,h, 0xFFFFFF).setInteractive();
-    //     let buttonSelected = false;
+    kage(TestVar) {
 
-    //     buttonTest.on('pointerup', () => {
-    //         if (buttonSelected == false) {
-    //             buttonSelected = true;
-    //             buttonTest.setFillStyle(0x00FF00);
-    //      
-    //         }
-    //         else {
-    //             buttonSelected = false;
-    //             buttonTest.setFillStyle(0xFF0000);
-    //           
-    //         }
-    //     });
-    // }
+        switch(TestVar){
+            case "1v1":
+            break;
+            case "2v2":
+            break;
+        }
+
+
+
+        // if (buttonSelected == false) buttonSelected = true;
+        // else buttonSelected = false;
+        // buttonTest1.setFillStyle(0x00FF00);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // buttonTest.setFillStyle(0x00FF00);
+    // buttonTest.setFillStyle(0xFF0000);
+
 }
