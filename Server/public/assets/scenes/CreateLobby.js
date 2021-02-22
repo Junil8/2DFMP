@@ -11,6 +11,9 @@ export class CreateLobby extends Phaser.Scene {
     create() {
 
         let centerX = this.cameras.main.width / 2;
+        let arrayLobbyPlayers = [false, false];
+        let boolLobbyPrivate = false;
+        let arrayLobbyMap = [false, false, false];
 
         let textHeading = this.add.text(centerX, 40, 'Create Lobby', { font: "bold 48px Monospace" }).setOrigin(0.5);
         let buttonReturn = this.Method.CreateButton.call(this, centerX, 100, 240, 45, 'Return', () => { this.scene.start('MainMenu') })
@@ -23,49 +26,39 @@ export class CreateLobby extends Phaser.Scene {
         let imageMap1 = this.add.image(centerX - 150, 350, "map1");
         let imageTemplate2 = this.add.image(centerX, 350, "template");
         let imageTemplate3 = this.add.image(centerX + 150, 350, "template");
-        let buttonCreateLobby = this.Method.CreateButton.call(this, centerX, 420, 150, 40, 'Create', () => { this.scene.start('Match') })
-
-        let buttonTest1 = this.add.rectangle(100, 100, 100, 50, 0xFFFFFF);
-
-        let arrayLobbyPlayers = ["1v1", "2v2"];
         let boolLobbyPrivate = false; 
-        let arrayLobbyMap = ["map1", "map2", "map3"]
+        let buttonCreateLobby = this.Method.CreateButton.call(this, centerX, 420, 150, 40, 'Create', () => { this.scene.start('MatchLobby') })
 
+        let buttonTest1 = this.add.rectangle(100, 100, 100, 50, 0xFF0000).setInteractive();
+        let buttonTest2 = this.add.rectangle(100, 200, 100, 50, 0xFF0000).setInteractive();
+        let buttonTest3 = this.add.rectangle(100, 300, 100, 50, 0xFF0000).setInteractive();
 
-        this.kage(buttonTest1);
+        let buttonArray = [buttonTest1, buttonTest2, buttonTest3];
 
+        buttonTest1.on('pointerup', () => {
+            this.test(arrayLobbyMap, 0, buttonArray);
+        });
+        buttonTest2.on('pointerup', () => {
+            this.test(arrayLobbyMap, 1, buttonArray);
+        });
+        buttonTest3.on('pointerup', () => {
+            this.test(arrayLobbyMap, 2, buttonArray);
+        });
     }
 
-    kage(TestVar) {
-
-        switch(TestVar){
-            case "1v1":
-            break;
-            case "2v2":
-            break;
+    test(Select, arrayNumber, buttonArray) {
+        if (Select[arrayNumber] == false) {
+            for (let i = 0; i < Select.length; ++i) {
+                Select[i] = false;
+                buttonArray[i].setFillStyle(0xFF0000);
+            }
+            Select[arrayNumber] = true;
+            buttonArray[arrayNumber].setFillStyle(0x00FF00);
         }
-
-
-
-        // if (buttonSelected == false) buttonSelected = true;
-        // else buttonSelected = false;
-        // buttonTest1.setFillStyle(0x00FF00);
+        else {
+            Select[arrayNumber] = false;
+            buttonArray[arrayNumber].setFillStyle(0xFF0000);
+        }
+        console.log(Select);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // buttonTest.setFillStyle(0x00FF00);
-    // buttonTest.setFillStyle(0xFF0000);
-
 }
