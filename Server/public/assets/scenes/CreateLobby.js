@@ -26,7 +26,6 @@ export class CreateLobby extends Phaser.Scene {
         let imageMap1 = this.add.image(centerX - 150, 350, "map1");
         let imageTemplate2 = this.add.image(centerX, 350, "template");
         let imageTemplate3 = this.add.image(centerX + 150, 350, "template");
-        let boolLobbyPrivate = false; 
         let buttonCreateLobby = this.Method.CreateButton.call(this, centerX, 420, 150, 40, 'Create', () => { this.scene.start('MatchLobby') })
 
         let buttonTest1 = this.add.rectangle(100, 100, 100, 50, 0xFF0000).setInteractive();
