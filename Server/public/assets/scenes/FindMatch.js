@@ -22,7 +22,6 @@ export class FindMatch extends Phaser.Scene {
         let button2v2 = this.Method.CreateButton.call(this, centerX, 255, 240, 45, 'Find 2v2', () => { this.scene.start('MatchLobby') })
         let borderbot = this.add.rectangle(centerX, 290, 300, 2, 0x595652);
 
-        
         // let formLobbyCode = this.add.dom( centerX - 70, 270).createFromCache('LobbyCode');
         let buttonLobbyCode = this.Method.CreateButton.call(this, centerX, 325, 200, 45, 'LobbyCode...', () => {
             let LobbyCode = prompt("Indtast lobby code");
