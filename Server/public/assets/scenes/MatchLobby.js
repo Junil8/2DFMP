@@ -1,12 +1,18 @@
 import { MenuMethods } from '../MenuMethods.js';
 export class MatchLobby extends Phaser.Scene {
 
+    
+
     constructor() {
         super({ key: "MatchLoby" });
     }
 
-    Method = new MenuMethods;
+    init(data){
+    console.log('Yo', data);
+    
+    }
 
+    Method = new MenuMethods;
     create() {
         let centerX = this.cameras.main.width / 2;
         

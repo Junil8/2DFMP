@@ -45,7 +45,7 @@ export class CreateLobby extends Phaser.Scene {
         // transparent boxes for selected maps
         let selectedMap1 = this.add.rectangle(centerX - 150, 350, 140, 80, 0x00FF00, 0.2).setVisible(false);
         let selectedMap2 = this.add.rectangle(centerX, 350, 140, 80, 0x00FF00, 0.2).setVisible(false);
-        let selectedMap3 = this.add.rectangle(centerX + 150, 350, 140, 80, 0x00FF00, 0.2    ).setVisible(false);
+        let selectedMap3 = this.add.rectangle(centerX + 150, 350, 140, 80, 0x00FF00, 0.2).setVisible(false);
 
         // collection of checkmarks and selected maps, used when setting visibility
         let arrayCheckmarkPlayer = [checkmark1v1, checkmark2v2];
@@ -53,18 +53,8 @@ export class CreateLobby extends Phaser.Scene {
         let arraySelectMap = [selectedMap1, selectedMap2, selectedMap3];
 
         // button that checks if the lobby criteria is met, then starts lobby if fitting.
-        let buttonCreateLobby = this.Method.CreateButton.call(this, centerX, 420, 150, 40, 'Create', () => { this.CheckLobbyCriteria() })
+        let buttonCreateLobby = this.Method.CreateButton.call(this, centerX, 420, 150, 40, 'Create', () => { this.CheckLobbyCriteria(arrayLobbyPlayer, arrayLobbyPrivate, arrayLobbyMap) })
     }
-
-
-    // TO DO !!!!
-    // check if true for eachs
-    CheckLobbyCriteria(player,private,map){
-        for (let i = 0)
-        if(){}
-        else this.scene.start('MatchLobby');
-    }
-
 
     CreateSelectableImage(x, y, picture, func) {
         let image = this.add.image(x, y, picture).setInteractive();
@@ -73,6 +63,20 @@ export class CreateLobby extends Phaser.Scene {
             if (typeof func == 'function') { func(); }
         })
         return image;
+    }
+
+    CheckLobbyCriteria(player, privateL, map) {
+        let selectedPlayer = null;
+        let selectedPrivate = false;
+        let selectedMap = null;
+        for (let i = 0; i < player.length; ++i) if (player[i] == true) selectedPlayer = i;
+        for (let i = 0; i < privateL.length; ++i) if (privateL[i] == true) selectedPrivate = i;
+        for (let i = 0; i < map.length; ++i) if (map[i] == true) selectedMap = i;
+        let selectedArray = [selectedPlayer, selectedPrivate, selectedMap];
+        console.log("Player: " + selectedPlayer + " Private " + selectedPrivate + " Map " + selectedMap);
+        let kage = "hej";
+        if (selectedPlayer != null && selectedMap != null) this.scene.start('MatchLobby', { test: kage, test2: "ne"});
+        else alert("Select players and a map");
     }
 
     CheckSelect(Select, arrayNumber, arraycheck) {
