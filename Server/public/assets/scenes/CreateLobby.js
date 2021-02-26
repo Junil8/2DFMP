@@ -12,10 +12,18 @@ export class CreateLobby extends Phaser.Scene {
         // center of page
         let centerX = this.cameras.main.width / 2;
 
-        // variables used to check if a button is selected.
-        let arrayLobbyPlayer = [false, false];
-        let arrayLobbyPrivate = [false];
-        let arrayLobbyMap = [false, false, false];
+        let lobbyPlayer = {
+            player1v1: false,
+            player2v2: false,
+        };
+        let lobbyPrivate = {
+            Private: false
+        };
+        let lobbyMap = {
+            Map1: false,
+            Map2: false,
+            Map3: false,
+        };
 
         // Page header 
         let textHeading = this.add.text(centerX, 40, 'Create Lobby', { font: "bold 48px Monospace" }).setOrigin(0.5);
@@ -23,14 +31,14 @@ export class CreateLobby extends Phaser.Scene {
         let borderTop = this.add.rectangle(centerX, 135, 300, 2, 0x595652);
 
         // Buttons for lobby settings
-        let button1v1 = this.Method.CreateButton.call(this, centerX, 170, 200, 45, '1v1 Match', () => { this.CheckSelect(arrayLobbyPlayer, 0, arrayCheckmarkPlayer) })
-        let button2v2 = this.Method.CreateButton.call(this, centerX, 225, 200, 45, '2v2 Match', () => { this.CheckSelect(arrayLobbyPlayer, 1, arrayCheckmarkPlayer) })
-        let buttonPrivate = this.Method.CreateButton.call(this, centerX, 280, 200, 45, 'Private', () => { this.CheckSelect(arrayLobbyPrivate, 0, arrayCheckmarkPrivate) })
+        let button1v1 = this.Method.CreateButton.call(this, centerX, 170, 200, 45, '1v1 Match', () => { this.checkSelect(lobbyPlayer, 'player1v1') });
+        let button2v2 = this.Method.CreateButton.call(this, centerX, 225, 200, 45, '2v2 Match', () => { })
+        let buttonPrivate = this.Method.CreateButton.call(this, centerX, 280, 200, 45, 'Private', () => { })
 
         // Map images
-        let imageMap1 = this.CreateSelectableImage(centerX - 150, 350, "map1", () => { this.CheckSelect(arrayLobbyMap, 0, arraySelectMap) });
-        let imageMap2 = this.CreateSelectableImage(centerX, 350, "template", () => { this.CheckSelect(arrayLobbyMap, 1, arraySelectMap) });
-        let imageMap3 = this.CreateSelectableImage(centerX + 150, 350, "template", () => { this.CheckSelect(arrayLobbyMap, 2, arraySelectMap) });
+        let imageMap1 = this.CreateSelectableImage(centerX - 150, 350, "map1", () => { });
+        let imageMap2 = this.CreateSelectableImage(centerX, 350, "template", () => { });
+        let imageMap3 = this.CreateSelectableImage(centerX + 150, 350, "template", () => { });
 
         // checkboxes for lobby settings
         let checkbox1v1 = this.add.rectangle(centerX - 125, 170, 30, 30, 0xFFFFFF).setStrokeStyle(1, 0x595652);
@@ -47,51 +55,35 @@ export class CreateLobby extends Phaser.Scene {
         let selectedMap2 = this.add.rectangle(centerX, 350, 140, 80, 0x00FF00, 0.2).setVisible(false);
         let selectedMap3 = this.add.rectangle(centerX + 150, 350, 140, 80, 0x00FF00, 0.2).setVisible(false);
 
-        // collection of checkmarks and selected maps, used when setting visibility
-        let arrayCheckmarkPlayer = [checkmark1v1, checkmark2v2];
-        let arrayCheckmarkPrivate = [checkmarkPrivate];
-        let arraySelectMap = [selectedMap1, selectedMap2, selectedMap3];
-
         // button that checks if the lobby criteria is met, then starts lobby if fitting.
-        let buttonCreateLobby = this.Method.CreateButton.call(this, centerX, 420, 150, 40, 'Create', () => { this.CheckLobbyCriteria(arrayLobbyPlayer, arrayLobbyPrivate, arrayLobbyMap) })
+        let buttonCreateLobby = this.Method.CreateButton.call(this, centerX, 420, 150, 40, 'Create', () => { })
     }
+
+    checkSelect(selectedObj, selectedProperty) {
+        console.log("Start ");
+        console.log(selectedObj);
+        if (selectedObj[selectedProperty] == false) {
+            Object.keys(selectedObj).forEach(element => {
+                selectedObj[element] = false;
+            });
+            selectedObj[selectedProperty] = true;
+        }
+        else selectedObj[selectedProperty] = false;
+
+        console.log("End ");
+        console.log(selectedObj);
+
+
+    };
+
+
 
     CreateSelectableImage(x, y, picture, func) {
         let image = this.add.image(x, y, picture).setInteractive();
-        image.on('pointerup', () => {
-            console.log("click")
-            if (typeof func == 'function') { func(); }
-        })
+        image.on('pointerup', () => { if (typeof func == 'function') func(); });
         return image;
     }
 
-    CheckLobbyCriteria(player, privateL, map) {
-        let selectedPlayer = null;
-        let selectedPrivate = false;
-        let selectedMap = null;
-        for (let i = 0; i < player.length; ++i) if (player[i] == true) selectedPlayer = i;
-        for (let i = 0; i < privateL.length; ++i) if (privateL[i] == true) selectedPrivate = i;
-        for (let i = 0; i < map.length; ++i) if (map[i] == true) selectedMap = i;
-        let selectedArray = [selectedPlayer, selectedPrivate, selectedMap];
-        console.log("Player: " + selectedPlayer + " Private " + selectedPrivate + " Map " + selectedMap);
-        let kage = "hej";
-        if (selectedPlayer != null && selectedMap != null) this.scene.start('MatchLobby', { test: kage, test2: "ne"});
-        else alert("Select players and a map");
-    }
 
-    CheckSelect(Select, arrayNumber, arraycheck) {
-        if (Select[arrayNumber] == false) {
-            for (let i = 0; i < Select.length; ++i) {
-                Select[i] = false;
-                arraycheck[i].setVisible(false);
-            }
-            Select[arrayNumber] = true;
-            arraycheck[arrayNumber].setVisible(true);
-        }
-        else {
-            Select[arrayNumber] = false;
-            arraycheck[arrayNumber].setVisible(false);
-        }
-        console.log(Select);
-    }
+
 }
