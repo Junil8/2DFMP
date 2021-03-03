@@ -11,7 +11,7 @@ export class MatchLobby extends Phaser.Scene {
         this.player = data._Player;
         this.private = data._Private;
         this.map = data._Map;
-        console.log(this.player + "\n" + this.private + "\n" + this.map + "\n" )
+        console.log(this.player + "\n" + this.private + "\n" + this.map + "\n")
     }
 
     Method = new MenuMethods;
@@ -20,10 +20,13 @@ export class MatchLobby extends Phaser.Scene {
 
         let centerX = this.cameras.main.width / 2;
 
-        //let textHeading = this.add.text(centerX, 50, 'Match Lobby', { font: "bold 48px Monospace" }).setOrigin(0.5);
-        let buttonReturn = this.Method.CreateButton.call(this, centerX, 130, 240, 45, 'Return', () => { this.scene.start('MainMenu') })
 
-        
+
+        let textlobbyCode = this.add.text(50,390,'Lobby Code: 231289', { font: "bold 24px monospace"});
+        let buttonReturn = this.Method.CreateButton.call(this, 450, 400, 175, 50, 'Return', () => { this.scene.start('MainMenu') });
+        let buttonReady = this.Method.CreateButton.call(this, 650, 400, 175, 50, 'Ready', () => { console.log("Start") });
+        let borderbotleft 
+
         let Team1 = {
             teamName: null,
             joinButton: null,
@@ -32,10 +35,8 @@ export class MatchLobby extends Phaser.Scene {
             colorbutton: null,
             borderBot: null,
         };
-        let Team2 = {
 
-        };
-        let footer = { }
+        let footer = {}
 
 
 
