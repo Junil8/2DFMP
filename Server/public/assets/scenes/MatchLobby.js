@@ -20,6 +20,7 @@ export class MatchLobby extends Phaser.Scene {
 
         let centerX = this.cameras.main.width / 2;
 
+        // header
         let textTeam1 = this.add.text(50,25,'Team 1', { font: "bold 24px monospace"});
         let textTeam2 = this.add.text(450,25,'Team 2', { font: "bold 24px monospace"});
         let buttonJoin1 = this.Method.CreateButton.call(this, 275, 38, 125, 40 , 'Join', () => { console.log("Start") });
@@ -27,7 +28,6 @@ export class MatchLobby extends Phaser.Scene {
         let borderTopLeft  = this.add.rectangle(centerX - 200,75,375,3,0x595652);
         let borderTopRight  = this.add.rectangle(centerX + 200,75,375,3,0x595652);
         let header = {}
-
 
         // footer
         let textLobbyCode = this.add.text(50,400,'Lobby Code: 231289', { font: "bold 24px monospace"});
@@ -37,8 +37,12 @@ export class MatchLobby extends Phaser.Scene {
         let borderBotRight  = this.add.rectangle(centerX + 200,375,375,3,0x595652);
         let footer = {}
 
+        let Player1 = this.add.sprite(200, 100).play('lime_idle'); 
+        let Player1 = this.add.sprite(200, 100).play('red_idle'); 
+        
 
-        let Team1 = {
+
+        let Team = {
             
             player1Sprite: null,
             player2Sprite: null,
@@ -48,6 +52,7 @@ export class MatchLobby extends Phaser.Scene {
             player2Name:null,
             textTeamColor: null,
             teamColor: null,
+            buttonChangeColor: null,
             
         };
 
