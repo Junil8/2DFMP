@@ -1,4 +1,4 @@
-import { MenuMethods } from '../MenuMethods.js';
+import { MenuMethods } from '../SceneClasses/MenuMethods.js';
 export class FindMatch extends Phaser.Scene {
 
     constructor() {

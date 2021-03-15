@@ -1,7 +1,10 @@
-import { MenuMethods } from '../MenuMethods.js';
+import { MenuMethods } from '../SceneClasses/MenuMethods.js';
+import { TeamClass } from '../SceneClasses/TeamClass.js';
 export class MatchLobby extends Phaser.Scene {
 
-
+    Method = new MenuMethods;
+    Team1 = new TeamClass("test1", "test2");
+    Team2 = new TeamClass("test1", "test2");
 
     constructor() {
         super({ key: "MatchLoby" });
@@ -14,13 +17,13 @@ export class MatchLobby extends Phaser.Scene {
         console.log(this.player + "\n" + this.private + "\n" + this.map + "\n")
     }
 
-    Method = new MenuMethods;
+    
 
     create() {
 
         let centerX = this.cameras.main.width / 2;
 
-        // header
+        // Header
         let textTeam1 = this.add.text(50,25,'Team 1', { font: "bold 24px monospace"});
         let textTeam2 = this.add.text(450,25,'Team 2', { font: "bold 24px monospace"});
         let buttonJoin1 = this.Method.CreateButton.call(this, 275, 38, 125, 40 , 'Join', () => { console.log("Start") });
@@ -29,7 +32,10 @@ export class MatchLobby extends Phaser.Scene {
         let borderTopRight  = this.add.rectangle(centerX + 200,75,375,3,0x595652);
         let header = {}
 
-        // footer
+        // Middle 
+        
+
+        // Footer
         let textLobbyCode = this.add.text(50,400,'Lobby Code: 231289', { font: "bold 24px monospace"});
         let buttonReturn = this.Method.CreateButton.call(this, 525, 410, 125, 40, 'Return', () => { this.scene.start('MainMenu') });
         let buttonReady = this.Method.CreateButton.call(this, 675, 410, 125, 40 , 'Ready', () => { console.log("Start") });
@@ -37,33 +43,6 @@ export class MatchLobby extends Phaser.Scene {
         let borderBotRight  = this.add.rectangle(centerX + 200,375,375,3,0x595652);
         let footer = {}
 
-        let Player1 = this.add.sprite(200, 100).play('lime_idle'); 
-        let Player1 = this.add.sprite(200, 100).play('red_idle'); 
-        
-
-
-        let Team = {
-            
-            player1Sprite: null,
-            player2Sprite: null,
-            player1Checkmark: null,
-            player2Checkmark: null,
-            player1Name:null,
-            player2Name:null,
-            textTeamColor: null,
-            teamColor: null,
-            buttonChangeColor: null,
-            
-        };
-
-
-
-
-
-
-
+        this.Team1.Create.call(this);
     }
-
-
-
 }

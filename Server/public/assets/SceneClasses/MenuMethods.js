@@ -51,4 +51,5 @@ export class MenuMethods {
         let musicArray = [node, border, slider];
         return musicArray;
     }
+
 }

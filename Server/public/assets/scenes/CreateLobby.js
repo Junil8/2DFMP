@@ -1,4 +1,4 @@
-import { MenuMethods } from '../MenuMethods.js';
+import { MenuMethods } from '../SceneClasses/MenuMethods.js';
 export class CreateLobby extends Phaser.Scene {
 
     constructor() {

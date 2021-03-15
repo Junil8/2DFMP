@@ -4288,6 +4288,14 @@
    { "name": "red_run_punch", "from": 509, "to": 514, "direction": "forward" },
    { "name": "red_wall_slide", "from": 515, "to": 516, "direction": "forward" },
    { "name": "red_fly", "from": 517, "to": 519, "direction": "forward" }
+   { "name": "lime_still", "from": 18, "to": 18, "direction": "forward" },
+   { "name": "green_still", "from": 83, "to": 83, "direction": "forward" },
+   { "name": "cyan_still", "from": 148, "to": 148, "direction": "forward" },
+   { "name": "blue_still", "from": 213, "to": 213, "direction": "forward" },
+   { "name": "yellow_still", "from": 278, "to": 278, "direction": "forward" },
+   { "name": "orange_still", "from": 343, "to": 343, "direction": "forward" },
+   { "name": "pink_still", "from": 408, "to": 408, "direction": "forward" },
+   { "name": "red_still", "from": 473, "to": 473, "direction": "forward" }
   ]
  }
 }
