@@ -3,30 +3,41 @@ export class TeamClass {
 
     Method = new MenuMethods;
 
-    constructor(player1, player2) {
-        this.player1 = player1;
-        this.player2 = player2;
+    constructor() {
+        this.container;
+
+        this.player1Sprite;
+        this.player2Sprite;
+
         this.player1Checkmark;
         this.player2Checkmark;
+        
         this.player1Name;
+        this.player1NamePosition;
         this.player2Name;
+        this.player2NamePosition;
+        
         this.textTeamColor;
         this.teamColor;
         this.buttonChangeColor;
     }
 
+    CreateButton(){
+        
+    }
+
     Create() {
-        let test1 = this.add.sprite(100, 125).play('lime_still').setScale(2);
-        let test2 = this.add.sprite(275, 125).play('green_still').setScale(2);
+        this.container = this.add.container(100, 100); 
+
+        
+
+        this.player1Sprite = this.add.sprite(100, 125).play('lime_still').setScale(2);
+        this.player2Sprite = this.add.sprite(275, 125).play('green_still').setScale(2);
 
         this.player1Checkmark = this.add.image(125,100, 'checkmark').setVisible(false);
         this.player2Checkmark = this.add.image(300,100, 'checkmark').setVisible(false);
 
-        this.player1Name; 
-        this.player2Name;
-
+        this.player1Name = this.add.text(this.player1Sprite.CenterX, this.player1Sprite.y + 45, "xXxDarknesxXx");
+        this.player2Name
     }
-
-
-
 }

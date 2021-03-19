@@ -44,5 +44,6 @@ export class MatchLobby extends Phaser.Scene {
         let footer = {}
 
         this.Team1.Create.call(this);
+        
     }
 }
