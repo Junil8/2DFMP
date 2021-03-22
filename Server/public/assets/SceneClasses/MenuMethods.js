@@ -30,7 +30,6 @@ export class MenuMethods {
         return ButtonDone;
     }
 
-
     // Prototype: Not finished!!!
     CreateSettingsMusic(sliderXMin, sliderXMax) {
 
@@ -51,5 +50,4 @@ export class MenuMethods {
         let musicArray = [node, border, slider];
         return musicArray;
     }
-
 }

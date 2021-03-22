@@ -11,33 +11,71 @@ export class TeamClass {
 
         this.player1Checkmark;
         this.player2Checkmark;
-        
-        this.player1Name;
-        this.player1NamePosition;
-        this.player2Name;
-        this.player2NamePosition;
-        
-        this.textTeamColor;
-        this.teamColor;
-        this.buttonChangeColor;
-    }
 
-    CreateButton(){
-        
+        this.player1Name;
+        this.player2Name;
+        this.player1NameRec;
+        this.player2NameRec;
+
+        this.textTeamColor;
+        this.textColor;
+        this.textColorRec;
+
+        this.buttonChangeColor;
+
+
     }
 
     Create() {
-        this.container = this.add.container(100, 100); 
-
-        
 
         this.player1Sprite = this.add.sprite(100, 125).play('lime_still').setScale(2);
         this.player2Sprite = this.add.sprite(275, 125).play('green_still').setScale(2);
 
-        this.player1Checkmark = this.add.image(125,100, 'checkmark').setVisible(false);
-        this.player2Checkmark = this.add.image(300,100, 'checkmark').setVisible(false);
+        this.player1Checkmark = this.add.image(125, 100, 'checkmark').setVisible(false);
+        this.player2Checkmark = this.add.image(300, 100, 'checkmark').setVisible(false);
 
-        this.player1Name = this.add.text(this.player1Sprite.CenterX, this.player1Sprite.y + 45, "xXxDarknesxXx");
-        this.player2Name
+        this.player1NameRec = this.add.rectangle(this.player1Sprite.x, this.player1Sprite.y + 60, 150, 20);
+        this.player1Name = this.add.text(0, 0, "xXxDarknessxXx");
+        Phaser.Display.Align.In.Center(this.player1Name, this.player1NameRec);
+
+        this.player2NameRec = this.add.rectangle(this.player2Sprite.x, this.player2Sprite.y + 60, 150, 20);
+        this.player2Name = this.add.text(0, 0, "xXxDarknessxXx");
+        Phaser.Display.Align.In.Center(this.player2Name, this.player2NameRec);
+
+        this.textTeamColor = this.add.text(120, 225, "Team color:", { font: "bold 22px monospace" });
+        this.textColorRec = this.add.rectangle(this.textTeamColor.x + 70, this.textTeamColor.y + 35, 100, 20);
+        this.textColor = this.add.text(0, 0, "blue", { font: "bold 16px monospace", color: '#0000FF' });
+        Phaser.Display.Align.In.Center(this.textColor, this.textColorRec);
+
+        this.buttonChangeColor = this.Method.CreateButton.call(this, 190, 350, 120, 35, "Change", () => {
+           
+           // Der bliver snakket til mig hele tiden, jeg kan ikke arbejde.
+            // this.colorPicker(); 
+            //this.test();
+            console.log("test");
+            this.textColor.setColor('#00FF00');
+        });
     }
+
+    test() {
+        console.log("Yo");
+    }
+
+    colorPicker() {
+
+        let color = {
+            red: 0xFF0000,
+            green: 0x00FF00,
+            blue: 0x0000FF,
+            yellow: 0xFFFF00
+        };
+
+        let selectedColor = "red";
+        return selectedColor;
+
+
+
+    }
+
+
 }
