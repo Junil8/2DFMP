@@ -1,6 +1,9 @@
 const { GameCache } = require('../resources/cache');
 const { VerifyToken } = require('../resources/auth');
 
+/**
+ * @summary                     A class to manage all connections and events from the game
+ */
 class SocketEventHandler {
     constructor(gameCache) {
         this.gameCache = gameCache || new GameCache();

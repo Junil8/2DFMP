@@ -1,5 +1,8 @@
 const Redis = require('ioredis');
 
+/**
+ * @summary                             A class to configure and manage the cache from the game server
+ */
 class GameCache {
     constructor(redisClient) {
         this.redisClient = redisClient || new Redis(process.env.REDIS_PORT, process.env.REDIS_HOST);

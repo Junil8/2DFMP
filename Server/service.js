@@ -7,7 +7,7 @@ require('dotenv/config');
 
 const { SocketEventHandler } = require('./event_handlers/socketEventHandler');
 
-// Setup application
+// Setup application and game server
 const app = Express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
