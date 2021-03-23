@@ -1,6 +1,8 @@
 import { MenuMethods } from '../SceneClasses/MenuMethods.js';
 export class TeamClass {
+    // this class is not finished
 
+    // Buttons made from the Method.Createbutton call can be found in \2DFMP\Server\public\assets\SceneClasses\MenuMethods.js
     Method = new MenuMethods;
 
     constructor() {
@@ -22,12 +24,11 @@ export class TeamClass {
         this.textColorRec;
 
         this.buttonChangeColor;
-
-
     }
 
     Create() {
-
+        // Adds the teams used in 2DFMP\Server\public\assets\scenes\MatchLobby.js
+        // Since i can't find a way to probably align text in phaser, I create an invisible rectangle and align the text inside it.
         this.player1Sprite = this.add.sprite(100, 125).play('lime_still').setScale(2);
         this.player2Sprite = this.add.sprite(275, 125).play('green_still').setScale(2);
 
@@ -47,29 +48,7 @@ export class TeamClass {
         this.textColor = this.add.text(0, 0, "blue", { font: "bold 16px monospace", color: '#0000FF' });
         Phaser.Display.Align.In.Center(this.textColor, this.textColorRec);
 
-        
-        this.buttonChangeColor = this.Method.CreateButton.call(this, 190, 350, 120, 35, "Change", );
+        this.buttonChangeColor = this.Method.CreateButton.call(this, 190, 350, 120, 35, "Change",);
     }
-
-    test() {
-        console.log("Yo");
-    }
-
-    colorPicker() {
-
-        let color = {
-            red: '#FF0000',
-            green: '#00FF00',
-            blue: '#0000FF',
-            yellow: '#FFFF00'
-        };
-
-        console.log("HEY");
-        let selectedColor = "red";
-      //  return selectedColor;
-
-
-    }
-
 
 }

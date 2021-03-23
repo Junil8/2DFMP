@@ -15,29 +15,32 @@ export class Settings extends Phaser.Scene {
         let centerX = this.cameras.main.width / 2;
         let scrollContainer = this.add.container(0, 0);
 
-        // Laver alle sidens knapper og text.
+        // Creates the content of the settings page: 
+        // headerArray is an array of text and buttons created in the CreateSettingsHeader method.
+        // musicArray is an array of elements, used to create the sound slider. The method is found in \2DFMP\Server\public\assets\SceneClasses\MenuMethods.js 
+        // textBodyStyling is the text to the left of the buttonArray. It describes the buttons purpose. Created by the CreateSettingsTexts method
+        // buttonArray is an array of buttons used to "change" the players input. Created by the CreateSettingsButtons method
         let headerArray = this.CreateSettingsHeader(centerX);
         let musicArray = this.Method.CreateSettingsMusic.call(this, 300, 500);
         let textBodyStyling = this.CreateSettingsTexts();
         let buttonArray = this.CreateSettingsButtons(centerX, 190, 55);
 
-        // Tilføjer sidens knapper/text etc til en container. Den bliver brugt til at "scrolle" på siden.
+        // Adds the page content to the scroll container
         scrollContainer.add(headerArray);
         scrollContainer.add(musicArray);
         scrollContainer.add(textBodyStyling);
         scrollContainer.add(buttonArray);
 
-        // Bagrunden checker om mousewheel bliver brugt. hvis det overholder if statement rykkes alle objekter som er tilføjet i scrollContainer.
-        // deltaY er den værdig som mousewheel er på.
+        // Checks if the mousewheel is used while the mouse is over the scene.
+        // If you scroll this way, the scrollContainer Y position is changed, together with all its objects. 
         this.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
             if (deltaY < 0 && scrollContainer.y < 0) scrollContainer.y -= deltaY * 15; // Scroll up 
             else if (deltaY > 0 && scrollContainer.y > -220) scrollContainer.y -= deltaY * 15; // Scroll down 
         });
-
     }
 
-    // Laver en overskrift, border samt return knap til mainmenu
-    // Bliver samlet i et array og tilføjes til scrollContainer i Create()
+    // Creates the header text, border and return button(to MainMenu) 
+    // All variables are put into the headerArray and returned. This is used in the headerArray variable inside the create method 
     CreateSettingsHeader(x) {
         let textHeading = this.add.text(x, 50, 'Settings', { font: "bold 48px Monospace" }).setOrigin(0.5);
         let buttonReturn = this.Method.CreateButton.call(this, x, 110, 200, 45, 'Return', () => { this.scene.start('MainMenu') });
@@ -45,15 +48,17 @@ export class Settings extends Phaser.Scene {
         let headerArray = [textHeading, border, buttonReturn[0], buttonReturn[1]];
         return headerArray;
     }
-    // Laver text beskrivelser til venstre for knapperne. 
-    // Bliver tilføjet til scrollContainer i Create()
+
+    // Creates text which describes player input. This is used in the textBodyStyling variable inside the create method 
     CreateSettingsTexts() {
         let textBody = ("Up\nDown\nLeft\nRight\nJump\nPunch\nKick\nBlock");
         let textBodyStyling = this.add.text(210, 235, textBody, { font: "bold 22px Monospace", lineSpacing: 35, align: 'right' });
         return textBodyStyling;
     }
-    // Laver alle knapper. sætter position efter x & y samt mellemrum mellem knapper med yGap.
-    // Samler alle knapper i et array som bliver tilføjet til scrollContainer i Create()
+
+    // Creates all buttons used to change player input. The buttons are made with the CreateButton method found in \2DFMP\Server\public\assets\SceneClasses\MenuMethods.js
+    // x & y for the position, the yGap number adds to y, Which "scales" the y position so buttons never touch.
+    // All buttons are put into the buttonArray, which is used in the buttonArray variable inside the create method 
     CreateSettingsButtons(x, y, yGap) {
         let buttonUp = this.Method.CreateButton.call(this, x, y += yGap, 200, 45, 'Arrow Up', () => { alert('Up') });
         let buttonDown = this.Method.CreateButton.call(this, x, y += yGap, 200, 45, 'Arrow Down', () => { alert('Down') });
@@ -67,7 +72,5 @@ export class Settings extends Phaser.Scene {
         buttonJump[0], buttonJump[1], buttonPunch[0], buttonPunch[1], buttonKick[0], buttonKick[1], buttonBlock[0], buttonBlock[1],];
         return buttonArray;
     }
-
-
 
 }

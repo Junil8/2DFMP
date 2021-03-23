@@ -2,7 +2,10 @@ export class MenuMethods {
 
     constructor() { }
 
-    // Creates a button with text
+    // Creates a rectangle and text.
+    // text is aligned inside the rectangle. 
+    // the rectangle listens for mouse events. if clicked the button runs a functions if given one.
+    // returns the text and rectangle as one array.
     CreateButton(x, y, w, h, string, func) {
         // Button & text colors
         let colorBase = 0xFFFFFF, colorOver = 0xcbdbfc, colorDown = 0xadbcde, colorBorder = 0x595652, colorText = 0x595652;
@@ -31,6 +34,7 @@ export class MenuMethods {
     }
 
     // Prototype: Not finished!!!
+    // this is for display purpose, the "slider" is draggable and changes "volume" by doing so.
     CreateSettingsMusic(sliderXMin, sliderXMax) {
 
         let sliderXDifference = sliderXMax - sliderXMin;

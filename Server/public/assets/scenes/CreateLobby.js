@@ -5,11 +5,12 @@ export class CreateLobby extends Phaser.Scene {
         super({ key: "CreateLobby" });
 
     }
-
+    
+    // Buttons made from the Method.Createbutton call can be found in \2DFMP\Server\public\assets\SceneClasses\MenuMethods.js
     Method = new MenuMethods;
 
     create() {
-        // center of page
+        
         let centerX = this.cameras.main.width / 2;
 
         // Page header 
@@ -27,12 +28,12 @@ export class CreateLobby extends Phaser.Scene {
         let imageMap2 = this.createSelectableImage(centerX, 350, "template", () => { this.checkSelect(lobbyMap, '_map2', checkmarkMap, '_checkMap2') });
         let imageMap3 = this.createSelectableImage(centerX + 150, 350, "template", () => { this.checkSelect(lobbyMap, '_map3', checkmarkMap, '_checkMap3') });
 
-        // checkboxes for lobby settings
+        // Checkboxes for lobby settings
         let checkbox1v1 = this.add.rectangle(centerX - 125, 170, 30, 30, 0xFFFFFF).setStrokeStyle(1, 0x595652);
         let checkbox2v2 = this.add.rectangle(centerX - 125, 225, 30, 30, 0xFFFFFF).setStrokeStyle(1, 0x595652);
         let checkboxPrivate = this.add.rectangle(centerX - 125, 280, 30, 30, 0xFFFFFF).setStrokeStyle(1, 0x595652);
 
-        // adds and hides checkmarks 
+        // Checkmarks with visibility set to false
         let checkmark1v1 = this.add.image(centerX - 125, 170, 'checkmark').setVisible(false);
         let checkmark2v2 = this.add.image(centerX - 125, 225, 'checkmark').setVisible(false);
         let checkmarkprivate = this.add.image(centerX - 125, 280, 'checkmark').setVisible(false);
@@ -40,12 +41,12 @@ export class CreateLobby extends Phaser.Scene {
         let checkmarkMap2 = this.add.rectangle(centerX, 350, 140, 80, 0x00FF00, 0.2).setVisible(false);
         let checkmarkMap3 = this.add.rectangle(centerX + 150, 350, 140, 80, 0x00FF00, 0.2).setVisible(false);
 
-        // Checkmark objects is used in checkSelect function to show / hide checkmarks.
+        // Checkmark objects is used in the checkSelect method to show / hide checkmarks.
         let checkmarkPlayer = { _check1v1: checkmark1v1, _check2v2: checkmark2v2 };
         let checkmarkPrivate = { _checkPrivate: checkmarkprivate };
         let checkmarkMap = { _checkMap1: checkmarkMap1, _checkMap2: checkmarkMap2, _checkMap3: checkmarkMap3 };
 
-        // Objects used in checkSelect function to manage which buttons are pressed
+        // Objects used in checkSelect method to manage which buttons are pressed
         let lobbyPlayer = { _player1v1: false, _player2v2: false };
         let lobbyPrivate = { _private: false };
         let lobbyMap = { _map1: false, _map2: false, _map3: false };
@@ -54,6 +55,10 @@ export class CreateLobby extends Phaser.Scene {
         let buttonCreateLobby = this.Method.CreateButton.call(this, centerX, 420, 150, 40, 'Create', () => { this.checkLobbyCriteria(lobbyPlayer, lobbyPrivate, lobbyMap); })
     }
 
+    // This method is used to check and then change a selected button.
+    // e.g. when 1v1 match is pressed if it was not selected before, sets both 1v1 and 2v2 match buttons to false, then set the 1v1 match to true.
+    // if 1v1 already was selected, it is set to false.
+    // the exact same thing happens with checkmarks.
     checkSelect(lobbyObj, LobbyProp, checkmarkObj, checkmarkProp) {
         if (lobbyObj[LobbyProp] == false) {
             Object.keys(lobbyObj).forEach(element => {
@@ -71,6 +76,8 @@ export class CreateLobby extends Phaser.Scene {
         }
     };
 
+    // Checks if all necessary variables needed to start the lobby is true (1v1 or 2v2, Map)
+    // If it checks out proceed to the MatchLobby scene
     checkLobbyCriteria(checkPlayer, checkPrivate, checkMap) {
         let selectedPlayer = null;
         let selectedPrivate = null;
@@ -89,6 +96,7 @@ export class CreateLobby extends Phaser.Scene {
         else alert("You need to select the number of players, and a map to create a lobby");
     }
 
+    // adds a clickable image 
     createSelectableImage(x, y, picture, func) {
         let image = this.add.image(x, y, picture).setInteractive();
         image.on('pointerup', () => { if (typeof func == 'function') func(); });

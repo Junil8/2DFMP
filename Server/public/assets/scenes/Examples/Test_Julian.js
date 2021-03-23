@@ -1,5 +1,8 @@
 export class Test_Julian extends Phaser.Scene {
 
+    // this is a test scene. I made this following the template of the Example.js scene to get an idea of how phaser works. - Julian
+
+    
     player;
     stars;
     platforms;
@@ -7,8 +10,6 @@ export class Test_Julian extends Phaser.Scene {
     movingPlatform;
     directionX = "";
     directionY = "";
-
-
 
     constructor() {
         super({ key: 'Test_Julian', active: true });
@@ -76,7 +77,7 @@ export class Test_Julian extends Phaser.Scene {
     update() {
         this.playerMoveCheck();
         this.platformMoveCheck();
-        this.playerAnimation(this.directionX,this.directionY);
+        this.playerAnimation(this.directionX, this.directionY);
     }
 
     platformMoveCheck() {
@@ -116,7 +117,5 @@ export class Test_Julian extends Phaser.Scene {
             if (directionY == "up") this.player.anims.play('jump', true);
             else if (directionY == "down") this.player.anims.play('fall', true);
         }
-
-
     }
 }
