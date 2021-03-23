@@ -113,5 +113,5 @@ Socket connection require a JSON Web Token to be send via. a handshake.
 
 | Event | JSON | Description |
 |:-----:| ---- | ----------- |
-|Connect|handshake: authorization|Connect to the service|
+|Connect|handshake: {<br>&nbsp;&nbsp;&nbsp;&nbsp;authentication<br>}|Connect to the service|
 |Disconnect||Disconnect the service|
