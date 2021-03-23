@@ -109,7 +109,7 @@ API service uses a JSON Web Token to be send as a bearer token.
 ## Socket Service
 
 The socket service is build using [Socket.io](https://www.npmjs.com/package/socket.io) and uses [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) to validate the user.  
-Socket connection require a JSON Web Token to be send via. a handshake.   
+Socket connection require a JSON Web Token to be send via. a handshake.  
 
 | Event | JSON | Description |
 |:-----:| ---- | ----------- |
