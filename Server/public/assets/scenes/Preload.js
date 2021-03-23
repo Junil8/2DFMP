@@ -87,7 +87,7 @@ export class Preload extends Phaser.Scene {
     create() {
         this.anims.createFromAseprite('adventure');
 
-        this.scene.start('MatchLobby');
+        this.scene.start('MainMenu');
     }
 
     update() {}
