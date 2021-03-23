@@ -35,7 +35,7 @@ export class MatchLobby extends Phaser.Scene {
         // Footer
         let textLobbyCode = this.add.text(50,400,'Lobby Code: 231289', { font: "bold 24px monospace"});
         let buttonReturn = this.Method.CreateButton.call(this, 525, 410, 125, 40, 'Return', () => { this.scene.start('MainMenu') });
-        let buttonReady = this.Method.CreateButton.call(this, 675, 410, 125, 40 , 'Ready', () => { console.log("Start") });
+        let buttonReady = this.Method.CreateButton.call(this, 675, 410, 125, 40 , 'Ready', () => { this.scene.start('Match') });
         let borderBotLeft  = this.add.rectangle(centerX - 200,375,375,3,0x595652);
         let borderBotRight  = this.add.rectangle(centerX + 200,375,375,3,0x595652);
         let footer = {};

@@ -47,14 +47,8 @@ export class TeamClass {
         this.textColor = this.add.text(0, 0, "blue", { font: "bold 16px monospace", color: '#0000FF' });
         Phaser.Display.Align.In.Center(this.textColor, this.textColorRec);
 
-        this.buttonChangeColor = this.Method.CreateButton.call(this, 190, 350, 120, 35, "Change", () => {
-           
-           // Der bliver snakket til mig hele tiden, jeg kan ikke arbejde.
-            // this.colorPicker(); 
-            //this.test();
-            console.log("test");
-            this.textColor.setColor('#00FF00');
-        });
+        
+        this.buttonChangeColor = this.Method.CreateButton.call(this, 190, 350, 120, 35, "Change", );
     }
 
     test() {
@@ -64,15 +58,15 @@ export class TeamClass {
     colorPicker() {
 
         let color = {
-            red: 0xFF0000,
-            green: 0x00FF00,
-            blue: 0x0000FF,
-            yellow: 0xFFFF00
+            red: '#FF0000',
+            green: '#00FF00',
+            blue: '#0000FF',
+            yellow: '#FFFF00'
         };
 
+        console.log("HEY");
         let selectedColor = "red";
-        return selectedColor;
-
+      //  return selectedColor;
 
 
     }
