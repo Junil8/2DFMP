@@ -1,6 +1,11 @@
 const { VerifyToken } = require('../resources/auth');
 const UserModel = require('../models/User');
 
+/**
+ * Middleware used to validate if the request is legel.
+ * If the request is invalid terminate the request and send an error message.
+ * If the request is valid send it allonge.
+ */
 const authentication = async (request, response, next) => {
     let authorization = request.headers.authorization;
 

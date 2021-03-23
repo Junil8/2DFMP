@@ -8,6 +8,13 @@ const UserModel = require('../models/User');
 
 const router = Express.Router();
 
+/**
+ * Route used to get user information.
+ * If request invalid terminate request and send an error message.
+ * If request valid response with user from database.
+ * 
+ * Path: [GET] /user/[username]
+ */
 router.get('/:username', Authentication, async (request, response) => {
     if (request.user.username === request.params.username || request.user.role === 'admin') {
 		try {
@@ -22,6 +29,11 @@ router.get('/:username', Authentication, async (request, response) => {
     }
 });
 
+/**
+ * Route used to check if an email address or an username is available.
+ * 
+ * Path: [POST] /user/available
+ */
 router.post('/available', async (request, response) => {
     let error = {}, hasError = false;
 
@@ -52,6 +64,13 @@ router.post('/available', async (request, response) => {
     }
 });
 
+/**
+ * Route used to create a new user.
+ * If request invalid terminate request and send an error message.
+ * If request valid create user on datebase.
+ * 
+ * Path: [POST] /user
+ */
 router.post('/', async (request, response) => {
     let error = {}, hasError = false;
 
@@ -90,6 +109,13 @@ router.post('/', async (request, response) => {
     }
 });
 
+/**
+ * Route used to edit/patch an user.
+ * If request invalid terminate request and send an error message.
+ * If request valid update user on datebase.
+ * 
+ * Path: [PATCH] /user/[username]
+ */
 router.patch('/:username', Authentication, async (request, response) => {
     if (request.user.username !== request.params.username && request.user.role !== 'admin') {
         return response.status(403).json({error: { authentication: `Forbidden.`}});
@@ -132,6 +158,13 @@ router.patch('/:username', Authentication, async (request, response) => {
     }
 });
 
+/**
+ * Route used to delete an user.
+ * If request invalid terminate request and send an error message.
+ * If request valid delete user from database.
+ * 
+ * Path: [POST] /user/delete/[username]
+ */
 router.post('/delete/:username', Authentication, async (request, response) => {
     if (request.user.username !== request.params.username && request.user.role !== 'admin') {
         return response.status(403).json({error: { authentication: `Forbidden.`}});

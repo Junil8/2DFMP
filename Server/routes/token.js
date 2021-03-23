@@ -7,6 +7,11 @@ const UserModel = require('../models/User');
 
 const router = Express.Router();
 
+/**
+ * Route used to get a token. The token is used to validate a login.
+ * 
+ * Path: [POST] /token
+ */
 router.post('/', async (request, response) => {
     let user = await UserModel.findOne({ email_address: request.body.email_address });
 
