@@ -21,11 +21,20 @@ export class Character extends Phaser.Physics.Matter.Sprite {
             waiting: false
         }
 
+
+        /**
+         * Physics on the character
+         * 
+         * For the game can apply physics will the character be needing an body and sensors.
+         * We create a body and sensors with Phasers Math and Geom.
+         */
+        
         if (width == undefined) width = this.width;
         if (height == undefined) height = this.height;
 
         const { Body, Bodies } = Phaser.Physics.Matter.Matter;
 
+        // Calculate positions to create a body and sensors at
         const offset = new Phaser.Geom.Point(this.width / 2, (this.height / 2) + (this.height - height));
         const offsetSensorLeft = new Phaser.Geom.Point(offset.x - width / 4, offset.y);
         const offsetSensorRight = new Phaser.Geom.Point(offset.x + width / 4, offset.y);
@@ -33,20 +42,21 @@ export class Character extends Phaser.Physics.Matter.Sprite {
         const offsetCrouchingHitbox = new Phaser.Geom.Point(offset.x, offset.y + (height * 0.125));
         const radius = width / 4;
 
+        // Calculate size of a body and sensors
         const sizeSensorLeft = new Phaser.Math.Vector2(width / 2, height - (radius * 2));
         const sizeSensorRight = new Phaser.Math.Vector2(width / 2, height - (radius * 2));
         const sizeSensorBottom = new Phaser.Math.Vector2(width - radius * 2, 2);
         const sizeCrouchingHitbox = new Phaser.Math.Vector2(width, height * 0.75);
 
+        // Create rectangles to create a body from
         const main = Bodies.rectangle(offset.x, offset.y, width, height, { label: 'main', chamfer: { radius: radius }});
-
         const left = Bodies.rectangle(offsetSensorLeft.x, offsetSensorLeft.y, sizeSensorLeft.x, sizeSensorLeft.y, { label: 'left', isSensor: true });
         const bottom = Bodies.rectangle(offsetSensorBottom.x, offsetSensorBottom.y, sizeSensorBottom.x, sizeSensorBottom.y, { label: 'bottom', isSensor: true });
         const right = Bodies.rectangle(offsetSensorRight.x, offsetSensorRight.y, sizeSensorRight.x, sizeSensorRight.y, { label: 'right', isSensor: true });
-
         const standingHitbox = Bodies.rectangle(offset.x, offset.y, width, height, { label: 'hitbox', isSensor: true });
         const crouchingHitbox = Bodies.rectangle(offsetCrouchingHitbox.x, offsetCrouchingHitbox.y, sizeCrouchingHitbox.x, sizeCrouchingHitbox.y, { label: 'hitbox', isSensor: true });
 
+        // Create the body with sensors
         const compound = Body.create({
             parts: [main, left, bottom, right, standingHitbox, crouchingHitbox],
             frictionStatic: 0,
@@ -55,6 +65,7 @@ export class Character extends Phaser.Physics.Matter.Sprite {
             label: 'character'
         });
 
+        // Setting body states
         this.setExistingBody(compound)
             .setFixedRotation()
             .setPosition(x, y)
@@ -69,22 +80,21 @@ export class Character extends Phaser.Physics.Matter.Sprite {
             crouchingHitbox: crouchingHitbox
         }
 
+        // Apply a handle on beforeupdate event to reset the touching state from last update
         this.scene.matter.world.on("beforeupdate", this.resetTouching, this);
 
+        // Apply a handle on collide event to check if an sensor is touching something
         this.scene.matterCollision.addOnCollideStart({
             objectA: [this.sensors.left, this.sensors.bottom, this.sensors.right],
             callback: this.onSensorCollide,
             context: this
         });
 
-        this.scene.matterCollision.addOnCollideActive({
-            objectA: [this.sensors.left, this.sensors.bottom, this.sensors.right],
-            callback: this.onSensorCollide,
-            context: this
-        });
+        //---------------
 
         this.destroyed = false;
 
+        // Apply a handles to scene events
         this.scene.events.on("update", this.update, this);
         this.scene.events.once("shutdown", this.destroy, this);
         this.scene.events.once("destroy", this.destroy, this);

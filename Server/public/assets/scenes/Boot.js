@@ -13,10 +13,12 @@ export class Boot extends Phaser.Scene {
     }
 
     preload() {
+        // Loading title image
         this.load.image('title', './assets/graphic/2dfmp/gui/title.png');
     }
     
     create() {
+        // Create scenes
         this.scene.add('Preload', Preload);
         this.scene.add('MainMenu', MainMenu);
         this.scene.add('FindMatch', FindMatch);
@@ -25,6 +27,7 @@ export class Boot extends Phaser.Scene {
         this.scene.add('MatchLobby', MatchLobby);
         this.scene.add('Match', Match);
         
+        // Start Preload scene
         this.scene.start('Preload');
     }
 
